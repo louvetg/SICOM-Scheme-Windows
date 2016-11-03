@@ -52,7 +52,7 @@ void init_interpreter (char tab_form[NB_FORM][STRLEN], uint num_tab_form[NB_FORM
     obj_meta            = init_meta_env(tab_form,obj_meta,num_tab_form );
 }
 
-int main ( int argc, char *argv[] ) {
+int main (/* int argc, char *argv[]*/ ) {
 
     char     input[BIGSTRING];
     uint*    pos;
@@ -80,7 +80,7 @@ int main ( int argc, char *argv[] ) {
        puis la sortie du programme avec un code erreur non nul (EXIT_FAILURE) */
     /* ERROR_MSG("Erreur. Arret du programme"); */
 
-    if ( argc > 2 ) {
+    /*if ( argc > 2 ) {
         usage_error( argv[0] );
         exit( EXIT_FAILURE );
     }
@@ -88,21 +88,25 @@ int main ( int argc, char *argv[] ) {
         usage_error( argv[0] );
         exit( EXIT_SUCCESS );
     }
-		
+	
+	*/
+
     init_interpreter(tab_form, num_tab_form);
 	
     /*par defaut : mode shell interactif */
     fp = stdin;
     mode = INTERACTIF;
-    if(argc == 2) {
+
+//    if(argc == 2) {
         /* mode fichier de commandes */
-        fp = fopen( argv[1], "r" );
-        if ( fp == NULL ) {
-            perror( "fopen" );
-            exit( EXIT_FAILURE );
-        }
-        mode = SCRIPT;
-    }
+//        fp = fopen( argv[1], "r" );
+//        if ( fp == NULL ) {
+//            perror( "fopen" );
+//            exit( EXIT_FAILURE );
+//       }
+//        mode = SCRIPT;
+//    }
+
 
 
     while ( 1 ) {
