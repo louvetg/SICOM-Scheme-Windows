@@ -97,8 +97,10 @@ typedef enum {
 	BASIC_ATOME,    /* la premiere trouvee dans la ligne semble etre d'une chaine */
 	S_EXPR_PARENTHESIS, /* la premiere trouvee dans la ligne semble etre une expression parenthesee */
 	FINISHED        /* on a trouve une S-Expr bien formee */
-} EXPRESSION_TYPE_T;
-
+} EXPRESSION_TYPE_T;
+
+
+
 uint  sfs_get_sexpr(char *input, FILE *fp) {
 	int       parlevel = 0;
 	uint      in_string = FALSE;
@@ -112,69 +114,64 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 	EXPRESSION_TYPE_T typeOfExpressionFound = NOTHING;
 
 	parlevel = 0;
-	memset(input, '\0', BIGSTRING);
+	memset(input, '\0', BIGSTRING);
+
 	do {
 		ret = NULL;
-		chunk = NULL;
+		chunk = k;
+		memset(chunk, '\0', BIGSTRING);
 
 		/* si en mode interactif*/
 		if (stdin == fp) {
 			uint nspaces = 2 * parlevel;
+
 			init_string(sfs_prompt);
 
-			/* le prompt indique le niveau de parenthese et decale la prochaine entrée en fonction de ce niveau (un peu à la python)*/
-
+			/* le prompt indique le niveau de parenthese
+			et decale la prochaine entrée en fonction
+			de ce niveau (un peu à la python)*/
 			sprintf(sfs_prompt, "SFS:%u > ", parlevel);
 
 			for (i = 0; i< nspaces; i++) {
 				sfs_prompt[strlen(sfs_prompt)] = ' ';
 			}
+
 			/* si sur plusieurs lignes, le \n équivaut à un espace*/
 			if (nspaces>0) {
 				input[strlen(input) + 1] = '\0';
 				input[strlen(input)] = ' ';
 			}
-			/*saisie de la prochaine ligne à ajouter dans l'input*/
-			chunk = readline(sfs_prompt);
-		}
-		/*si en mode fichier*/
-		else {
-			chunk = k;
-			memset(chunk, '\0', BIGSTRING);
-			ret = fgets(chunk, BIGSTRING, fp);
 
-			if (NULL == ret) {
-				/* fin de fichier...*/
-				if (parlevel != 0) {
-					WARNING_MSG("Parse error: missing ')'");
-					return S_KO;
-				}
-				return S_END;
-			}
-			if (strlen(chunk) == BIGSTRING - 1
-				&& chunk[BIGSTRING - 1] != '\n'
-				&& !feof(fp)) {
-				WARNING_MSG("Too long line for this interpreter!");
-				return S_KO;
-			}
-		}
-		/* si la ligne est inutile => on va directement à la prochaine iteration */
+			/*saisie de la prochaine ligne à ajouter dans l'input*/
+			printf("%s", sfs_prompt);
+			ret = fgets(chunk, BIGSTRING, fp);
+			if (ret && chunk[strlen(chunk) - 1] == '\n') chunk[strlen(chunk) - 1] = '\0';
+
+		}
+
 		if (first_usefull_char(chunk) == NULL) {
 			continue;
 		}
+
+
 		s = strlen(chunk);
+
 		if (s > 0) {
 			if (strlen(input) + s > BIGSTRING - 1) {
 				WARNING_MSG("Too long a S-expression for this interpreter!");
 				return S_KO;
 			}
+
 			for (i = 0; i< strlen(chunk); i++) {
-				/* si la fin de la ligne chunk est inutile, on ajoute un espace dans input et on sort de la boucle*/
+				/* si la fin de la ligne chunk est inutile,
+				on ajoute un espace dans input et on sort de la boucle*/
 				if (in_string == FALSE && first_usefull_char(chunk + i) == NULL) {
 					chunk[i] = '\0';
 					input[strlen(input)] = ' ';
 					break;
 				}
+
+
 				switch (chunk[i]) {
 				case '(':
 					if (in_string == FALSE
@@ -207,7 +204,9 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 							if (typeOfExpressionFound != S_EXPR_PARENTHESIS) {
 								typeOfExpressionFound = STRING_ATOME;
 							}
-						}						else {							in_string = FALSE;
+						}
+						else {
+							in_string = FALSE;
 							if (typeOfExpressionFound == STRING_ATOME) {
 								typeOfExpressionFound = FINISHED;
 							}
@@ -227,6 +226,8 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 					}
 					break;
 				}
+
+
 				if (typeOfExpressionFound == FINISHED) {
 					char *first_useful = first_usefull_char(chunk + i + 1);
 					if (first_useful != NULL) {
@@ -239,6 +240,7 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 						return S_KO;
 					}
 				}
+
 				/* recopie char par char*/
 				input[strlen(input)] = chunk[i];
 			}
@@ -248,20 +250,21 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 			}
 		}
 
+
 		if (parlevel > 0 && fp != stdin) {
 			if (feof(fp)) {
 				WARNING_MSG("Parse error: missing ')'");
 				return S_KO;
 			}
+
 			if (input[strlen(input) - 1] == '\n') input[strlen(input) - 1] = ' ';
 		}
-	} while (parlevel > 0);
-	/* Suppression des espaces restant a la fin de l'expression, notamment le dernier '\n' */
-	while (isspace(input[strlen(input) - 1])) input[strlen(input) - 1] = '\0';
-	if (stdin == fp) {
-		add_history(input);
-	}
-	return S_OK;
+	} while (parlevel > 0);
+
+	/* Suppression des espaces restant a la fin de l'expression, notamment le dernier '\n' */
+	while (isspace(input[strlen(input) - 1])) input[strlen(input) - 1] = '\0';
+
+	return S_OK;
 }
 
 
