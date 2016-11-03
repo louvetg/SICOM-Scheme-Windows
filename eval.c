@@ -29,9 +29,9 @@ uint test_auto_eval(object* o){
 }
 
 object* test_symb(object* o){
-	DEBUG_MSG("Test forme -- ");
+	printf("Test forme -- \n");
 	if (o->type != SFS_SYMBOL){ return NULL; }
-	DEBUG_MSG("L'objet est de type symbole");
+	printf("L'objet est de type symbole\n");
 
 	uint k = 0;
 	uint end = 0;
@@ -43,14 +43,14 @@ object* test_symb(object* o){
 
 	do{
 		if (car(car(m))->type == SFS_SYMBOL){
-		DEBUG_MSG("Symbole stocké en mémoire: %s ",car(car(m))->this.symbol);
+		printf("Symbole stocké en mémoire: %s \n",car(car(m))->this.symbol);
 			if (strcmp(car(car(m))->this.symbol, o->this.symbol) == 0){
 				cond = 0;
 				s = car(m);
 			}
 		}
 		else{
-			DEBUG_MSG("L'element stocke n'est pas de type symbole ");
+			printf("L'element stocke n'est pas de type symbole\n");
 		}
 		if (cdr(m) == obj_empty_list && cond == 1){
 			cond = 0;
@@ -119,15 +119,15 @@ object* sfs_eval(object * input){
 	object*  tst_symb = test_symb(obj);
 	if (tst_symb == NULL){
 		if(atm){
-			WARNING_MSG("%s, n'est pas stocké en mémoire", obj->this.symbol);
+			printf("%s, n'est pas stocké en mémoire\n", obj->this.symbol);
 			return NULL;
 		}
-		else{WARNING_MSG("Car de la liste n'est pas une fonction");}
+		else{printf("Car de la liste n'est pas une fonction\n");}
 		return NULL;
 	}
 	if (cdr(tst_symb)->type == SFS_ADRESS){
 		if(atm){
-			WARNING_MSG("Expression invalide pour %s", obj->this.symbol);
+			printf("Expression invalide pour %s\n", obj->this.symbol);
 			return NULL;
 		}
 		return forme(input, cdr(tst_symb)->this.adress, obj_meta);			

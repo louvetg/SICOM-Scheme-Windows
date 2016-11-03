@@ -27,7 +27,7 @@ typedef enum {INTERACTIF,SCRIPT} inter_mode;
 
 void usage_error( char *command ) {
 
-    fprintf( stderr, "Usage: %s [file.scm]\n   If no file is given, executes in Shell mode.\n", command );
+    fprintf( stderr, "Usage: %s [file.scm]\n   If no file is given, executes in Shell mode.", command );
 }
 
 
@@ -52,7 +52,7 @@ void init_interpreter (char tab_form[NB_FORM][STRLEN], uint num_tab_form[NB_FORM
     obj_meta            = init_meta_env(tab_form,obj_meta,num_tab_form );
 }
 
-int main (/* int argc, char *argv[]*/ ) {
+int main ( int argc, char *argv[] ) {
 
     char     input[BIGSTRING];
     uint*    pos;
@@ -66,47 +66,13 @@ int main (/* int argc, char *argv[]*/ ) {
     char tab_form[NB_FORM][STRLEN];
     uint num_tab_form[NB_FORM];
 
-    /* exemples d'utilisation des macros du fichier notify.h */
-    /* WARNING_MSG : sera toujours affiche */
-    WARNING_MSG("Un message WARNING_MSG !");
-
-    /* macro INFO_MSG : uniquement si compil avec -DVERBOSE. Cf Makefile*/
-    INFO_MSG("Un message INFO_MSG : Debut du programme %s", argv[0]);
-
-    /* macro DEBUG_MSG : uniquement si compil avec -DDEBUG (ie : compil avec make debug). Cf Makefile */
-    DEBUG_MSG("Un message DEBUG_MSG !");
-
-    /* La ligne suivante provoquerait l'affichage du message
-       puis la sortie du programme avec un code erreur non nul (EXIT_FAILURE) */
-    /* ERROR_MSG("Erreur. Arret du programme"); */
-
-    /*if ( argc > 2 ) {
-        usage_error( argv[0] );
-        exit( EXIT_FAILURE );
-    }
-    if(argc == 2 && strcmp(argv[1], "-h") == 0) {
-        usage_error( argv[0] );
-        exit( EXIT_SUCCESS );
-    }
-	
-	*/
 
     init_interpreter(tab_form, num_tab_form);
 	
     /*par defaut : mode shell interactif */
     fp = stdin;
-    mode = INTERACTIF;
 
-//    if(argc == 2) {
-        /* mode fichier de commandes */
-//        fp = fopen( argv[1], "r" );
-//        if ( fp == NULL ) {
-//            perror( "fopen" );
-//            exit( EXIT_FAILURE );
-//       }
-//        mode = SCRIPT;
-//    }
-
+	mode = INTERACTIF;
 
 
     while ( 1 ) {
@@ -120,17 +86,7 @@ int main (/* int argc, char *argv[]*/ ) {
 
         Sexpr_err = sfs_get_sexpr( input, fp );
 	
-        if ( S_OK != Sexpr_err) {
-            /* si fichier alors on sort*/
-            if (mode == SCRIPT) {
-                fclose( fp );
-                if (Sexpr_err==S_END) {
-                    /* Cas fin de fichier script */
-                    exit(EXIT_SUCCESS);
-                }
-                /* Cas S-Expression mal formee dans le fichier script */
-                ERROR_MSG("Malformed S-expression --- Aborts");
-            }
+        if ( S_OK != Sexpr_err) {           
             /*sinon on rend la main à l'utilisateur*/
             continue;
         }
@@ -139,12 +95,12 @@ int main (/* int argc, char *argv[]*/ ) {
             continue;
         }
 
-      	DEBUG_MSG("--------debut lecture--------");
+      	printf("--------debut lecture--------\n");
 	
         *pos  = 0;
-	DEBUG_MSG("Fonction delete_space -- Chaine initiale : %s",input);
+	printf("Fonction delete_space -- Chaine initiale : %s\n",input);
         Delete_space(input);
-	DEBUG_MSG("Fonction delete_space -- Chaine final : %s",input);
+	printf("Fonction delete_space -- Chaine final : %s\n",input);
         sexpr = sfs_read( input, pos );
         if ( NULL == sexpr ) {
             /* si fichier alors on sort*/
@@ -156,7 +112,7 @@ int main (/* int argc, char *argv[]*/ ) {
             /*sinon on rend la main à l'utilisateur*/
             continue ;
         }
-	DEBUG_MSG("-------read done-------");
+	printf("-------read done-------\n");
         output = sfs_eval( sexpr );
         if( NULL == output) {
             /* si fichier alors on sort*/

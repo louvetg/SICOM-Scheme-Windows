@@ -48,31 +48,31 @@ void init_num_tab_form(uint num_tab_form[NB_FORM]){
 object* forme(object* o, uint tst_form, object* obj_meta){
 	switch(tst_form){
 	case QUOTE :
-		DEBUG_MSG("evaluation de quote");
+		printf("evaluation de quote\n");
 		return quote(o);
 		break;
 	case SET:
-		DEBUG_MSG("evaluation de set!");
+		printf("evaluation de set!\n");
 		return set(o,obj_meta);
 		break;
 	case DEFINE:
-		DEBUG_MSG("evaluation de define");
+		printf("evaluation de define\n");
 		return define(o,obj_meta);
 		break;
 	case AND:
-		DEBUG_MSG("evaluation de and");
+		printf("evaluation de and\n");
 		return and(o);
 		break;
 	case OR:
-		DEBUG_MSG("evaluation de or");
+		printf("evaluation de or\n");
 		return or(o);
 		break;
 	case IF:
-		DEBUG_MSG("evaluation de if");
+		printf("evaluation de if\n");
 		return si(o);
 		break;
 	default:
-		DEBUG_MSG("Forme inconnue erreur");
+		printf("Forme inconnue erreur\n");
 		return NULL;
 		break;
 	}
@@ -117,20 +117,20 @@ object* set(object* o, object* obj_meta){
 	object* obj = test_symb(car(cdr(o)));
 
 	if (obj == NULL){
-		WARNING_MSG("Variable inconnue ou de mauvaise forme");
+		printf("Variable inconnue ou de mauvaise forme\n");
 		return NULL;
 	}
 
 	if(cdr(o) == obj_empty_list){
-		WARNING_MSG("Expression invalide dans le set");
+		printf("Expression invalide dans le set\n");
 		return NULL;	
 	}
 	if(cdr(cdr(o)) == obj_empty_list){
-		WARNING_MSG("Expression invalide dans le set");
+		printf("Expression invalide dans le set\n");
 		return NULL;	
 	}
 	if (cdr(obj)->type == SFS_ADRESS){
-		WARNING_MSG("Ecriture impossible, %s de l'environnement meta est protégé",car(obj)->this.symbol);
+		printf("Ecriture impossible, %s de l'environnement meta est protégé\n",car(obj)->this.symbol);
 		return NULL;
 	}
 
@@ -156,7 +156,7 @@ object* set(object* o, object* obj_meta){
 object* quote(object* o){
 
 	if (cdr(cdr(o)) != obj_empty_list){ 
-		WARNING_MSG("quote ne prend que 1 argument. Synthaxe (quote <datum>)");
+		printf("quote ne prend que 1 argument. Synthaxe (quote <datum>)\n");
 		return NULL; }
 	{
 
@@ -189,7 +189,7 @@ object* quote(object* o){
 
 object* and(object* o){
 	if (cdr(o) == obj_empty_list){ 
-		WARNING_MSG("and prend 2 arguments. Synthaxe (and <test> <test>*)");/*Réel syntaxe (and <and>*) à voir pour remplacer*/
+		printf("and prend 2 arguments. Synthaxe (and <test> <test>*)\n");/*Réel syntaxe (and <and>*) à voir pour remplacer*/
 		return NULL; }
 	object* obj_pair_pred = cdr(o);
 	uint res = 1;
@@ -221,7 +221,7 @@ object* and(object* o){
 
 object* or(object* o){
 	if (cdr(o) == obj_empty_list){ 
-		WARNING_MSG("or prend 2 arguments. Synthaxe (or <test> <test>*)");/*Réel syntaxe (or <and>*) à voir pour remplacer*/
+		printf("or prend 2 arguments. Synthaxe (or <test> <test>*)\n");/*Réel syntaxe (or <and>*) à voir pour remplacer*/
 		return NULL;}
 	object* obj_pair_pred = cdr(o);
 	uint res = 1;
@@ -256,7 +256,7 @@ object* si(object* o){
 	else{ alternate = obj_undef; }
 
 	if (test == NULL){ 
-		WARNING_MSG("Erreur lors de l'évaluation du test");
+		printf("Erreur lors de l'évaluation du test\n");
 		return NULL; }
 	
 
@@ -264,7 +264,7 @@ object* si(object* o){
 	return sfs_eval(consequent);
 	
 erreur_si:
-	WARNING_MSG("if erreur de syntaxe. Synthaxe (if <expression> <tail expression> <tail expression>) ou (if <expression> <tail expression>)");/*Réel syntaxe (and <and>*) à voir pour remplacer*/
+	printf("if erreur de syntaxe. Synthaxe (if <expression> <tail expression> <tail expression>) ou (if <expression> <tail expression>)\n");/*Réel syntaxe (and <and>*) à voir pour remplacer*/
 	return NULL; 
 
 }
