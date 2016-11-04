@@ -31,7 +31,34 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="main.c">
+		<Unit filename="../basic.h" />
+		<Unit filename="../eval.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../eval.h" />
+		<Unit filename="../forme.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../forme.h" />
+		<Unit filename="../mem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../mem.h" />
+		<Unit filename="../notify.h" />
+		<Unit filename="../number.h" />
+		<Unit filename="../object.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../object.h" />
+		<Unit filename="../print.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../print.h" />
+		<Unit filename="../read.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../read.h" />
+		<Unit filename="../repl.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
