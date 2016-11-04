@@ -1,0 +1,70 @@
+# depslib dependency file v1.0
+1478264548 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\eval.c
+	"eval.h"
+
+1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\eval.h
+	"object.h"
+
+1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\object.h
+	"number.h"
+
+1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\number.h
+	"basic.h"
+
+1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\basic.h
+	<string.h>
+	"notify.h"
+
+1478264548 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\notify.h
+	<stdlib.h>
+	<stdio.h>
+
+1478264548 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\forme.c
+	"forme.h"
+
+1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\forme.h
+	<stdlib.h>
+	"object.h"
+	"eval.h"
+
+1478264548 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\mem.c
+	"mem.h"
+
+1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\mem.h
+	<stdlib.h>
+	"object.h"
+	"forme.h"
+
+1478202200 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\object.c
+	"object.h"
+	"mem.h"
+
+1478202200 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\print.c
+	"print.h"
+	<stdio.h>
+
+1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\print.h
+	"object.h"
+	<limits.h>
+
+1478264548 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\read.c
+	<stdio.h>
+	<ctype.h>
+	"read.h"
+
+1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\read.h
+	<stdio.h>
+	<errno.h>
+	"object.h"
+	<limits.h>
+
+1478264548 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\repl.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"object.h"
+	"read.h"
+	"eval.h"
+	"print.h"
+	"forme.h"
+

@@ -1,11 +1,11 @@
 /**
- * @file notify.h
- * @author François Cayre <cayre@yiking.(null)>
- * @date Thu Mar 22 17:22:55 2012
- * @brief Notification management.
- *
- * Notification management.
- */
+* @file notify.h
+* @author François Cayre <cayre@yiking.(null)>
+* @date Thu Mar 22 17:22:55 2012
+* @brief Notification management.
+*
+* Notification management.
+*/
 
 #ifndef _NOTIFY_H_
 #define _NOTIFY_H_

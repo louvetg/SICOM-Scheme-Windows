@@ -10,10 +10,6 @@
 
 #include <stdio.h>
 #include <ctype.h>
-
-#include <readline/readline.h>
-#include <readline/history.h>
-
 #include "read.h"
 
 
@@ -103,6 +99,8 @@ typedef enum {
 	FINISHED        /* on a trouve une S-Expr bien formee */
 } EXPRESSION_TYPE_T;
 
+
+
 uint  sfs_get_sexpr(char *input, FILE *fp) {
 	int       parlevel = 0;
 	uint      in_string = FALSE;
@@ -120,7 +118,8 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 
 	do {
 		ret = NULL;
-		chunk = NULL;
+		chunk = k;
+		memset(chunk, '\0', BIGSTRING);
 
 		/* si en mode interactif*/
 		if (stdin == fp) {
@@ -131,6 +130,7 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 			/* le prompt indique le niveau de parenthese
 			et decale la prochaine entrée en fonction
 			de ce niveau (un peu à la python)*/
+
 			sprintf(sfs_prompt, "SFS:%u > ", parlevel);
 
 			for (i = 0; i< nspaces; i++) {
@@ -144,33 +144,12 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 			}
 
 			/*saisie de la prochaine ligne à ajouter dans l'input*/
-			chunk = readline(sfs_prompt);
-		}
-		/*si en mode fichier*/
-		else {
-			chunk = k;
-			memset(chunk, '\0', BIGSTRING);
+			printf("%s", sfs_prompt);
 			ret = fgets(chunk, BIGSTRING, fp);
+			if (ret && chunk[strlen(chunk) - 1] == '\n') chunk[strlen(chunk) - 1] = '\0';
 
-			if (NULL == ret) {
-				/* fin de fichier...*/
-				if (parlevel != 0) {
-					WARNING_MSG("Parse error: missing ')'");
-					return S_KO;
-				}
-				return S_END;
-			}
-
-			if (strlen(chunk) == BIGSTRING - 1
-				&& chunk[BIGSTRING - 1] != '\n'
-				&& !feof(fp)) {
-				WARNING_MSG("Too long line for this interpreter!");
-				return S_KO;
-			}
 		}
 
-		/* si la ligne est inutile
-		=> on va directement à la prochaine iteration */
 		if (first_usefull_char(chunk) == NULL) {
 			continue;
 		}
@@ -180,7 +159,7 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 
 		if (s > 0) {
 			if (strlen(input) + s > BIGSTRING - 1) {
-				WARNING_MSG("Too long a S-expression for this interpreter!");
+				printf("Too long a S-expression for this interpreter!\n");
 				return S_KO;
 			}
 
@@ -210,7 +189,7 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 							typeOfExpressionFound = FINISHED;
 						}
 						if (parlevel < 0) {
-							WARNING_MSG("Parse error : cannot start with ')'");
+							printf("Parse error : cannot start with ')'\n");
 							return S_KO;
 						}
 					}
@@ -219,7 +198,7 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 					if (i<2 || chunk[i - 1] != '\\') {
 						if (in_string == FALSE) {
 							if (typeOfExpressionFound == BASIC_ATOME) {
-								WARNING_MSG("Parse error: invalid string after atom : '%s'", chunk + i);
+								printf("Parse error: invalid string after atom : '%s'\n", chunk + i);
 								return S_KO;
 							}
 							in_string = TRUE;
@@ -254,10 +233,10 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 					char *first_useful = first_usefull_char(chunk + i + 1);
 					if (first_useful != NULL) {
 						if (*first_useful == ')') {
-							WARNING_MSG("Parse error: too many closing parenthesis')'");
+							printf("Parse error: too many closing parenthesis')'\n");
 						}
 						else {
-							WARNING_MSG("Parse error: invalid trailing chars after S-Expr : '%s'", chunk + i);
+							printf("Parse error: invalid trailing chars after S-Expr : '%s'\n", chunk + i);
 						}
 						return S_KO;
 					}
@@ -267,7 +246,7 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 				input[strlen(input)] = chunk[i];
 			}
 			if (in_string == TRUE) {
-				WARNING_MSG("Parse error: non terminated string on line %s", chunk);
+				printf("Parse error: non terminated string on line %s\n", chunk);
 				return S_KO;
 			}
 		}
@@ -275,7 +254,7 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 
 		if (parlevel > 0 && fp != stdin) {
 			if (feof(fp)) {
-				WARNING_MSG("Parse error: missing ')'");
+				printf("Parse error: missing ')'\n");
 				return S_KO;
 			}
 
@@ -286,9 +265,6 @@ uint  sfs_get_sexpr(char *input, FILE *fp) {
 	/* Suppression des espaces restant a la fin de l'expression, notamment le dernier '\n' */
 	while (isspace(input[strlen(input) - 1])) input[strlen(input) - 1] = '\0';
 
-	if (stdin == fp) {
-		add_history(input);
-	}
 	return S_OK;
 }
 
@@ -430,7 +406,7 @@ object* read_atom(char* input, uint* pos){
 		init_chaine(Num,TEMPON);
 		Verif_Num(input, *pos , Num);
 		if (Num[0] == '\0'){
-			WARNING_MSG("Entier invalide en position %d", *pos);
+			printf("Entier invalide en position %d\n", *pos);
 			return NULL;
 		}
 		else {
@@ -445,7 +421,7 @@ object* read_atom(char* input, uint* pos){
 		init_chaine(strg,TEMPON);
 		Verif_strg(input, *pos, strg);
 		if (strg[0] == '\0'){
-			WARNING_MSG("chaine de caractere invalide en position %d. Les chaine de caractère doivent faire moins de %d caractères", *pos, TEMPON);
+			printf("chaine de caractere invalide en position %d. Les chaine de caractère doivent faire moins de %d caractères\n", *pos, TEMPON);
 			return NULL;
 		}
 		else {
@@ -461,7 +437,7 @@ object* read_atom(char* input, uint* pos){
 			init_chaine(chara,TEMPON);
 			Verif_Chara(input, *pos, chara);
 			if (chara[0] == '\0'){
-				WARNING_MSG("caractere invalide en position %d", *pos);
+				printf("caractere invalide en position %d\n", *pos);
 				return NULL;
 			}
 			else {
@@ -479,7 +455,7 @@ object* read_atom(char* input, uint* pos){
 			*pos = *pos + 2;
 			return obj_false;
 		}
-		WARNING_MSG("booleen invalide en position %d", *pos);
+		printf("booleen invalide en position %d\n", *pos);
 		return NULL;
 	}
 
@@ -487,7 +463,7 @@ object* read_atom(char* input, uint* pos){
 
 		if (input[*pos] == ' '){ 
 			return NULL; 
-			WARNING_MSG("argument invalide pour ' (quote) en position %d", *pos);
+			printf("argument invalide pour ' (quote) en position %d\n", *pos);
 		}
 		*pos = *pos + 1;
 		return apost(input, pos);
@@ -498,7 +474,7 @@ object* read_atom(char* input, uint* pos){
 	init_chaine(symb, TEMPON);
 	Verif_symb(input, *pos, symb);
 	if (symb[0] == '\0'){
-		WARNING_MSG("symbole invalide en position %d, taille maximum pour un symbole est de %d caractères", *pos, TEMPON);
+		printf("symbole invalide en position %d, taille maximum pour un symbole est de %d caractères\n", *pos, TEMPON);
 		return NULL;
 	}
 	else {
@@ -569,21 +545,21 @@ void Verif_Num(char* input, uint pos, char* Num){
 object* make_integer(char* Num, object* obj_Num){
 	char* eptr;
 	if (test_taille_uint(Num) == 2){
-		WARNING_MSG("%ld trop long pour etre stocké. Les entiers inférieur à %d sont stocké comme -inf", strtol(Num, &eptr, 0), INT_MIN);
+		printf("%ld trop long pour etre stocké. Les entiers inférieur à %d sont stocké comme -inf\n", strtol(Num, &eptr, 0), INT_MIN);
 		obj_Num->this.number.this.integer = INT_MIN;
 	}
 	if (test_taille_uint(Num) == 3){
-		WARNING_MSG("%ld trop long pour etre stocké. Les entiers supérieur à %d sont stocké comme +inf", strtol(Num, &eptr, 0), INT_MAX);
+		printf("%ld trop long pour etre stocké. Les entiers supérieur à %d sont stocké comme +inf\n", strtol(Num, &eptr, 0), INT_MAX);
 		obj_Num->this.number.this.integer = INT_MAX;
 	}
 	if (test_taille_uint(Num) == 1){
-		WARNING_MSG("Un entier est supérieur à %d ou inférieur à %d. Il est trop long pour etre lu", LONG_MAX , LONG_MIN);
+		printf("Un entier est supérieur à %d ou inférieur à %d. Il est trop long pour etre lu\n", LONG_MAX , LONG_MIN);
 		return NULL;
 	}
 
 	obj_Num->this.number.this.integer = strtol(Num, &eptr, 0);
 	if (obj_Num->this.number.this.integer == 0 && (Num[0] != '0')){
-		WARNING_MSG("erreur de stockage d'entier");
+		printf("erreur de stockage d'entier\n");
 		return NULL;
 	}
 	obj_Num->type = SFS_NUMBER;
@@ -681,7 +657,7 @@ uint test_string(uint k, char* input){
 object* make_string(char* strg, object* obj_strg){
 	strcpy(obj_strg->this.strg, strg);
 	if (strcmp(obj_strg->this.strg, strg) != 0){
-		WARNING_MSG("La chaine de caractère: %s à mal été stockée.",strg);
+		printf("La chaine de caractère: %s à mal été stockée.\n",strg);
 		return NULL;
 	}
 	obj_strg->type = SFS_STRING;
@@ -747,7 +723,7 @@ object* make_chara(char *chara, object* obj_chara){
 		obj_chara->type = SFS_CHARACTER;
 		return obj_chara;
 	}
-	WARNING_MSG("%s n'est pas un caractère possible", chara);
+	printf("%s n'est pas un caractère possible\n", chara);
 	return NULL;
 }
 

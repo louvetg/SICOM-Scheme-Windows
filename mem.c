@@ -60,19 +60,19 @@ object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, uint nu
 
 	for (i = 0; i < k; i++){
 		
-		DEBUG_MSG("%d_Contenu du tableau initial -- forme: %s, adresse: %d --",i,tab_form[i], num_tab_form[i]);
+		printf("%d_Contenu du tableau initial -- forme: %s, adresse: %d --\n",i,tab_form[i], num_tab_form[i]);
 		forme[i]->type = SFS_SYMBOL;
 		strcpy(forme[i]->this.symbol, tab_form[i]);
 
 		num[i]->type = SFS_ADRESS;
 		num[i]->this.adress = num_tab_form[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
-		DEBUG_MSG("%d_Creation des objects -- forme: %s, adresse: %d --",i,forme[i]->this.symbol, num[i]->this.adress);
+		printf("%d_Creation des objects -- forme: %s, adresse: %d --\n",i,forme[i]->this.symbol, num[i]->this.adress);
 
 		pair_forme[i]->type = SFS_PAIR;
 		pair_forme[i]->this.pair.car = forme[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */	
 		pair_forme[i]->this.pair.cdr = num[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
 
-		DEBUG_MSG("%d_Creation mémoire de %s à l'adresse %d",i, pair_forme[i]->this.pair.car->this.symbol, pair_forme[i]->this.pair.cdr->this.adress);   
+		printf("%d_Creation memoire de %s a l'adresse %d\n",i, pair_forme[i]->this.pair.car->this.symbol, pair_forme[i]->this.pair.cdr->this.adress);   
 
 		list_pair_forme[i]->type = SFS_PAIR;
 		list_pair_forme[i]->this.pair.car = pair_forme[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
