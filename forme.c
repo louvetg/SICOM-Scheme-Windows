@@ -26,13 +26,19 @@ void init_tab_form(char tab_form[NB_FORM][STRLEN]){
 *@param uint num_tab_form[NB_FORM]) tableau allant contenir les "adresse" des formes.
 */
 
-void init_num_tab_form(uint num_tab_form[NB_FORM]){
-	num_tab_form[0] = QUOTE;
-	num_tab_form[1] = SET;
-	num_tab_form[2] = DEFINE;
-	num_tab_form[3] = AND;
-	num_tab_form[4] = OR;
-	num_tab_form[5] = IF;
+void init_add_tab_form(adress tab_add_form[NB_FORM]){
+	tab_add_form[0].addtype = ADD_FORME;
+	tab_add_form[0].this.forme = *quote;
+	tab_add_form[1].addtype = ADD_MEM_FORME;
+	tab_add_form[1].this.forme = *set;
+	tab_add_form[2].addtype = ADD_MEM_FORME;
+	tab_add_form[2].this.forme = *define;
+	tab_add_form[3].addtype = ADD_FORME;
+	tab_add_form[3].this.forme = *and;
+	tab_add_form[4].addtype = ADD_FORME;
+	tab_add_form[4].this.forme = *or;
+	tab_add_form[0].addtype = ADD_FORME;
+	tab_add_form[0].this.forme = *si;
 }
 
 /**
