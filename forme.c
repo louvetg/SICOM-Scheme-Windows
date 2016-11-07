@@ -1,5 +1,6 @@
 #include "forme.h"
 
+
 /**
 *@fn void init_tab_form(char tab_form[NB_FORM][STRLEN])
 *
@@ -37,8 +38,8 @@ void init_add_tab_form(adress tab_add_form[NB_FORM]){
 	tab_add_form[3].this.forme = *and;
 	tab_add_form[4].addtype = ADD_FORME;
 	tab_add_form[4].this.forme = *or;
-	tab_add_form[0].addtype = ADD_FORME;
-	tab_add_form[0].this.forme = *si;
+	tab_add_form[5].addtype = ADD_FORME;
+	tab_add_form[5].this.forme = *si;
 }
 
 /**
@@ -51,31 +52,13 @@ void init_add_tab_form(adress tab_add_form[NB_FORM]){
 *@param object* obj_meta pointeur vers un objet dont le cdr.   
 */
 
-object* forme(object* o, uint tst_form, object* obj_meta){
-	switch(tst_form){
-	case QUOTE :
-		printf("evaluation de quote\n");
-		return quote(o);
+object* forme(object* o, adress tst_form, object* obj_meta){
+	switch(tst_form.addtype){
+	case  ADD_FORME:
+		return (*tst_form.this.forme)(o);
 		break;
-	case SET:
-		printf("evaluation de set!\n");
-		return set(o,obj_meta);
-		break;
-	case DEFINE:
-		printf("evaluation de define\n");
-		return define(o,obj_meta);
-		break;
-	case AND:
-		printf("evaluation de and\n");
-		return and(o);
-		break;
-	case OR:
-		printf("evaluation de or\n");
-		return or(o);
-		break;
-	case IF:
-		printf("evaluation de if\n");
-		return si(o);
+	case ADD_MEM_FORME:
+		return (*tst_form.this.mem_forme)(o,obj_meta);
 		break;
 	default:
 		printf("Forme inconnue erreur\n");
