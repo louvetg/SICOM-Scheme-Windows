@@ -66,29 +66,32 @@ object* test_symb(object* o){
 	return s;
 }
 
-uint test_primitive(object* o){
-	return 0xFF;
+/**
+*@fn object* forme(object* o, uint tst_form, object* obj_meta)
+*
+*@brief Lien à travers un switch entre les adresses les fonction C des formes.
+*
+*@param object* o pointeur vers un objet de type pair dont le car est une forme connu.
+*@param uint tst_form entier contenant "l'adresse" de la forme.
+*@param object* obj_meta pointeur vers un objet dont le cdr.
+*/
+
+object* all_symb(object* o, adress tst_form, object* obj_meta){
+	switch (tst_form.addtype){
+	case  ADD_FORME:
+		return (*tst_form.this.forme)(o);
+		break;
+	case ADD_MEM_FORME:
+		return (*tst_form.this.mem_forme)(o, obj_meta);
+		break;
+	case ADD_PRIMITIVE:
+		return (*tst_form.this.prim)(o);
+	default:
+		printf("Forme inconnue erreur\n");
+		return NULL;
+		break;
+	}
 }
-
-
-
-void ajout_tete(object* cdr, object** p_stack_cdr){/*servait dans une première ebauche de eval*/
-	object* o = make_object();
-	o->type = SFS_PAIR;
-	o->this.pair.cdr = *(p_stack_cdr);
-	o->this.pair.car = cdr;
-	*(p_stack_cdr) = o;
-	return;
-}
-
-object* supr_tete(object** p_stack_cdr){/*servait dans une première ebauche de eval*/
-	object* o = (*p_stack_cdr)->this.pair.car;
-	object* f = *p_stack_cdr;
-	*p_stack_cdr = (*p_stack_cdr)->this.pair.cdr;
-	free(f);
-	return o;
-}
-
 
 
 void ajout_tete_env(object* o, object* env){
@@ -130,7 +133,7 @@ object* sfs_eval(object * input){
 			printf("Expression invalide pour %s\n", obj->this.symbol);
 			return NULL;
 		}
-		return forme(input, cdr(tst_symb)->this.adress, obj_meta);			
+		return all_symb(input, cdr(tst_symb)->this.adress, obj_meta);			
 	}
 	else{ 
 		return obj_cpy(cdr(tst_symb));

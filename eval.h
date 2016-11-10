@@ -29,6 +29,7 @@ object* sfs_eval(object * o);
 void ajout_tete(object* , object** );
 object* supr_tete(object**);
 void ajout_tete_env(object* o, object* env);
+object* all_symb(object* o, uint tst_form, object* obj_meta);
 
 #ifdef __cplusplus
 }

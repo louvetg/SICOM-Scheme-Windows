@@ -42,30 +42,6 @@ void init_add_tab_form(adress tab_add_form[NB_FORM]){
 	tab_add_form[5].this.forme = *si;
 }
 
-/**
-*@fn object* forme(object* o, uint tst_form, object* obj_meta)
-*
-*@brief Lien à travers un switch entre les adresses les fonction C des formes. 
-*
-*@param object* o pointeur vers un objet de type pair dont le car est une forme connu.
-*@param uint tst_form entier contenant "l'adresse" de la forme.
-*@param object* obj_meta pointeur vers un objet dont le cdr.   
-*/
-
-object* forme(object* o, adress tst_form, object* obj_meta){
-	switch(tst_form.addtype){
-	case  ADD_FORME:
-		return (*tst_form.this.forme)(o);
-		break;
-	case ADD_MEM_FORME:
-		return (*tst_form.this.mem_forme)(o,obj_meta);
-		break;
-	default:
-		printf("Forme inconnue erreur\n");
-		return NULL;
-		break;
-	}
-}
 
 /**
 *@fn object* quote(object* o)
