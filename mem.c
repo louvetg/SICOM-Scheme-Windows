@@ -83,12 +83,12 @@ object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress 
 
 	for (i = k; i < k+j; i++){
 
-		printf("%d_Contenu du tableau initial -- symb: %s, adresse: %d --\n", i, tab_form[i-k], tab_add_form[i-k]);
+		printf("%d_Contenu du tableau initial -- symb: %s, adresse: %d --\n", i, tab_prim[i-k], tab_add_prim[i-k]);
 		symb[i]->type = SFS_SYMBOL;
-		strcpy(symb[i]->this.symbol, tab_form[i-k]);
+		strcpy(symb[i]->this.symbol, tab_prim[i-k]);
 
 		num[i]->type = SFS_ADRESS;
-		num[i]->this.adress = tab_add_form[i-k]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
+		num[i]->this.adress = tab_add_prim[i-k]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
 		printf("%d_Creation des objects -- symb: %s\n", i, symb[i]->this.symbol, num[i]->this.adress);
 
 		pair_symb[i]->type = SFS_PAIR;
