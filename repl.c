@@ -51,7 +51,7 @@ void init_interpreter(char tab_form[NB_FORM][STRLEN], adress tab_add_form[NB_FOR
     obj_false			= init_false();
     obj_undef			= init_undef();
     obj_meta            = init_environnement();
-    obj_meta            = init_meta_env(tab_form,obj_meta,tab_add_form );
+	obj_meta			= init_meta_env(tab_form, obj_meta, tab_add_form, tab_prim, tab_add_prim);
 }
 
 int main ( int argc, char *argv[] ) {

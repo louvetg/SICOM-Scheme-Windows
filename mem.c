@@ -31,7 +31,7 @@ object * init_environnement(){
 	return obj_meta;
 }
 
-object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress tab_add_form[NB_FORM] ){
+object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress tab_add_form[NB_FORM], char tab_prim[NB_PRIM][STRLEN], adress tab_add_prim[NB_PRIM]){
 	uint k = NB_FORM;
 	uint j = NB_PRIM;
 	uint i;
@@ -52,10 +52,10 @@ object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress 
 		num[i]->type = SFS_ADRESS;
 	}
 
-	list_pair_symb  = calloc(k, sizeof(object*));
+	list_pair_symb  = calloc(k+j, sizeof(object*));
 	for (i = 0; i < k+j; i++){ list_pair_symb[i] = calloc(1, sizeof(object*)); }
 
-	pair_symb = calloc(k, sizeof(object*));
+	pair_symb = calloc(k+j, sizeof(object*));
 	for (i = 0; i < k+j; i++){ pair_symb[i] = calloc(1, sizeof(object*)); }
 
 	for (i = 0; i < k; i++){
@@ -73,6 +73,29 @@ object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress 
 		pair_symb[i]->this.pair.cdr = num[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
 
 		printf("%d_Creation memoire de %s a l'adresse %d\n",i, pair_symb[i]->this.pair.car->this.symbol, pair_symb[i]->this.pair.cdr->this.adress);   
+
+		list_pair_symb[i]->type = SFS_PAIR;
+		list_pair_symb[i]->this.pair.car = pair_symb[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
+		list_pair_symb[i]->this.pair.cdr = obj_empty_list; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
+		if (i > 0){ list_pair_symb[i - 1]->this.pair.cdr = list_pair_symb[i]; }
+		else { obj_meta->this.pair.car = list_pair_symb[i]; }
+	}
+
+	for (i = k; i < k+j; i++){
+
+		printf("%d_Contenu du tableau initial -- symb: %s, adresse: %d --\n", i, tab_form[i-k], tab_add_form[i-k]);
+		symb[i]->type = SFS_SYMBOL;
+		strcpy(symb[i]->this.symbol, tab_form[i-k]);
+
+		num[i]->type = SFS_ADRESS;
+		num[i]->this.adress = tab_add_form[i-k]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
+		printf("%d_Creation des objects -- symb: %s\n", i, symb[i]->this.symbol, num[i]->this.adress);
+
+		pair_symb[i]->type = SFS_PAIR;
+		pair_symb[i]->this.pair.car = symb[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
+		pair_symb[i]->this.pair.cdr = num[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
+
+		printf("%d_Creation memoire de %s a l'adresse %d\n", i, pair_symb[i]->this.pair.car->this.symbol, pair_symb[i]->this.pair.cdr->this.adress);
 
 		list_pair_symb[i]->type = SFS_PAIR;
 		list_pair_symb[i]->this.pair.car = pair_symb[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
