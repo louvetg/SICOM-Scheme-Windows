@@ -33,29 +33,30 @@ object * init_environnement(){
 
 object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress tab_add_form[NB_FORM] ){
 	uint k = NB_FORM;
+	uint j = NB_PRIM;
 	uint i;
 	object** list_pair_symb;
 	object** symb;
 	object** pair_symb;
 	object** num;
 
-	symb = calloc(k, sizeof(object*));
-	for (i = 0; i < k; i++){ 
+	symb = calloc(k+j, sizeof(object*));
+	for (i = 0; i < k+j; i++){ 
 		symb[i] = calloc(1, sizeof(object*));
 		symb[i]->type = SFS_SYMBOL; 
 	}
 
-	num = calloc(k, sizeof(object*));
-	for (i = 0; i < k; i++){ 
+	num = calloc(k+j, sizeof(object*));
+	for (i = 0; i < k+j; i++){ 
 		num[i] = calloc(1, sizeof(object*));
 		num[i]->type = SFS_ADRESS;
 	}
 
 	list_pair_symb  = calloc(k, sizeof(object*));
-	for (i = 0; i < k; i++){ list_pair_symb[i] = calloc(1, sizeof(object*)); }
+	for (i = 0; i < k+j; i++){ list_pair_symb[i] = calloc(1, sizeof(object*)); }
 
 	pair_symb = calloc(k, sizeof(object*));
-	for (i = 0; i < k; i++){ pair_symb[i] = calloc(1, sizeof(object*)); }
+	for (i = 0; i < k+j; i++){ pair_symb[i] = calloc(1, sizeof(object*)); }
 
 	for (i = 0; i < k; i++){
 		

@@ -47,9 +47,9 @@ void init_interpreter(char tab_form[NB_FORM][STRLEN], adress tab_add_form[NB_FOR
 	init_add_tab_prim(tab_add_prim);
 
     obj_empty_list      = init_empty_list();
-    obj_true		= init_true();
-    obj_false		= init_false();
-    obj_undef		= init_undef();
+    obj_true			= init_true();
+    obj_false			= init_false();
+    obj_undef			= init_undef();
     obj_meta            = init_environnement();
     obj_meta            = init_meta_env(tab_form,obj_meta,tab_add_form );
 }
