@@ -18,6 +18,7 @@ extern "C" {
 #include <stdlib.h>
 #include "object.h"
 #include "forme.h"
+#include "primitive.h"
 
 
 
@@ -25,7 +26,7 @@ void *sfs_malloc( size_t size );
 void  sfs_free( void *ptr );
 
 object * init_environnement();
-object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress tab_add_form[NB_FORM] );
+object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress tab_add_form[NB_FORM], char tab_prim[NB_PRIM][STRLEN], adress tab_add_prim[NB_PRIM]);
 
 #ifdef __cplusplus
 }

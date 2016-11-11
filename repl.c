@@ -19,7 +19,7 @@
 #include "read.h"
 #include "eval.h"
 #include "print.h"
-#include "forme.h"
+#include "mem.h"
 
 /* mode d'interaction avec l'interpreteur (exemple)*/
 typedef enum {INTERACTIF,SCRIPT} inter_mode;
@@ -40,16 +40,18 @@ object* obj_undef;
 
 
 
-void init_interpreter (char tab_form[NB_FORM][STRLEN], adress tab_add_form[NB_FORM]) {
+void init_interpreter(char tab_form[NB_FORM][STRLEN], adress tab_add_form[NB_FORM], char tab_prim[NB_PRIM][STRLEN], adress tab_add_prim[NB_PRIM]) {
     init_tab_form(tab_form);
     init_add_tab_form(tab_add_form);
+	init_tab_prim(tab_prim);
+	init_add_tab_prim(tab_add_prim);
 
     obj_empty_list      = init_empty_list();
-    obj_true		= init_true();
-    obj_false		= init_false();
-    obj_undef		= init_undef();
+    obj_true			= init_true();
+    obj_false			= init_false();
+    obj_undef			= init_undef();
     obj_meta            = init_environnement();
-    obj_meta            = init_meta_env(tab_form,obj_meta,tab_add_form );
+	obj_meta			= init_meta_env(tab_form, obj_meta, tab_add_form, tab_prim, tab_add_prim);
 }
 
 int main ( int argc, char *argv[] ) {
@@ -66,7 +68,10 @@ int main ( int argc, char *argv[] ) {
     char tab_form[NB_FORM][STRLEN];
     adress tab_add_form[NB_FORM];
 
-    init_interpreter(tab_form, tab_add_form);
+	char tab_prim[NB_PRIM][STRLEN];
+	adress tab_add_prim[NB_PRIM];
+
+	init_interpreter(tab_form, tab_add_form, tab_prim, tab_add_prim );
 	
     /*par defaut : mode shell interactif */
     fp = stdin;
