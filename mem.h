@@ -18,6 +18,7 @@ extern "C" {
 #include <stdlib.h>
 #include "object.h"
 #include "forme.h"
+#include "primitive.h"
 
 
 
