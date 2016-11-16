@@ -18,7 +18,7 @@ extern "C" {
 
 #include "object.h"
 
-
+object* eval_prim(object* o);
 object* sfs_eval( object* );
 object* car(object * o);
 object* cdr(object * o);
