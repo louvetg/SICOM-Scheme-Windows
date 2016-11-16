@@ -103,7 +103,7 @@ void ajout_tete_env(object* o, object* env){
 }
 
 
-object* sfs_eval(object * input, int prim ){
+object* sfs_eval(object * input){
 
 	object* obj = input;
 	uint atm = 1;

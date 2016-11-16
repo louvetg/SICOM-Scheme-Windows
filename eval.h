@@ -19,7 +19,7 @@ extern "C" {
 #include "object.h"
 
 
-object* sfs_eval( object* , int );
+object* sfs_eval( object* );
 object* car(object * o);
 object* cdr(object * o);
 uint test_auto_eval(object* o);
