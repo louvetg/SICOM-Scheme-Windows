@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1478267407 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\eval.c
+1479311769 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\eval.c
 	"eval.h"
 
-1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\eval.h
+1479415648 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\eval.h
 	"object.h"
 
-1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\object.h
+1478885557 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\object.h
 	"number.h"
 
 1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\number.h
@@ -19,23 +19,24 @@
 	<stdlib.h>
 	<stdio.h>
 
-1478267407 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\forme.c
+1479308167 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\forme.c
 	"forme.h"
 
-1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\forme.h
+1478885557 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\forme.h
 	<stdlib.h>
 	"object.h"
 	"eval.h"
 
-1478267407 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\mem.c
+1478885755 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\mem.c
 	"mem.h"
 
-1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\mem.h
+1478885755 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\mem.h
 	<stdlib.h>
 	"object.h"
 	"forme.h"
+	"primitive.h"
 
-1478202200 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\object.c
+1478885557 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\object.c
 	"object.h"
 	"mem.h"
 
@@ -47,18 +48,18 @@
 	"object.h"
 	<limits.h>
 
-1478267407 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\read.c
+1478875850 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\read.c
 	<stdio.h>
 	<ctype.h>
 	"read.h"
 
-1478202200 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\read.h
+1478885557 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\read.h
 	<stdio.h>
 	<errno.h>
 	"object.h"
 	<limits.h>
 
-1478267407 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\repl.c
+1478885755 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\repl.c
 	<stdlib.h>
 	<stdio.h>
 	<string.h>
@@ -66,5 +67,13 @@
 	"read.h"
 	"eval.h"
 	"print.h"
-	"forme.h"
+	"mem.h"
+
+1479416222 c:\users\la_louve\documents\git_rep\sicom-scheme-windows\primitive.h
+	<stdlib.h>
+	"object.h"
+	"eval.h"
+
+1479416393 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\primitive.c
+	"primitive.h"
 

@@ -85,7 +85,7 @@ object* all_symb(object* o, adress tst_form, object* obj_meta){
 		return (*tst_form.this.mem_forme)(o, obj_meta);
 		break;
 	case ADD_PRIMITIVE:
-		return (*tst_form.this.prim)(o);
+		return (*tst_form.this.prim)(eval_prim(cdr(o)));
 	default:
 		printf("Forme inconnue erreur\n");
 		return NULL;
@@ -102,6 +102,18 @@ void ajout_tete_env(object* o, object* env){
 	env->this.pair.car = obj;
 }
 
+object* eval_prim(object* o){
+	if (o->type == SFS_PAIR){
+		object* obj_pair = make_object();
+		obj_pair->type = SFS_PAIR;
+		obj_pair->this.pair.car = sfs_eval(car(o));
+		obj_pair->this.pair.cdr = eval_prim(cdr(o));
+		return obj_pair;
+	}
+	if (test_auto_eval(o)){ return o; }
+	if (o == obj_empty_list){ return o; }
+	return NULL; /*erreur*/
+}
 
 object* sfs_eval(object * input){
 
