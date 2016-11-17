@@ -10,7 +10,7 @@
 */
 
 void init_tab_prim(char tab_form[NB_PRIM][STRLEN]){
-	strcpy(tab_form[0],"*");
+	strcpy(tab_form[0],"-");
 }
 
 /**
@@ -24,14 +24,28 @@ void init_tab_prim(char tab_form[NB_PRIM][STRLEN]){
 
 void init_add_tab_prim(adress tab_add_form[NB_PRIM]){
 	tab_add_form[0].addtype = ADD_PRIMITIVE;
-	tab_add_form[0].this.forme = *op_fois;
+	tab_add_form[0].this.forme = *moins;
 }
 
 
 
 
-object* op_fois(object* o){
-	return NULL;
+object* moins (object* o){
+	if (o == obj_empty_list)
+	{
+		WARNING_MSG("Le calcul est vide");
+		return NULL;
+	}
+	object* obj_sous = make_object();
+	obj_sous->type = SFS_NUMBER;
+	obj_sous->this.number.this.integer = car(o)->this.number.this.integer ;
+	o = cdr (o);
+	while (o != obj_empty_list)
+	{
+		obj_sous->this.number.this.integer = obj_sous->this.number.this.integer  -  car(o)->this.number.this.integer;
+		o = cdr(o);
+	}
+	return obj_sous;
 }
 
 
