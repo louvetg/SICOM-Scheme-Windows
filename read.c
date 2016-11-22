@@ -374,6 +374,13 @@ object* read_pair(char* input, uint* pos){
 		(*pos) = (*pos) + 1;
 	}
 
+	if (input[*pos] == '.'){
+		(*pos)++;
+		obj_Pair->this.pair.cdr = sfs_read(input, pos);
+		if (obj_Pair->this.pair.cdr == NULL){ return NULL; }
+		else { return obj_Pair; }
+	}
+
 	if (input[*pos] == ')'){
 		obj_Pair->this.pair.cdr = obj_empty_list;
 		(*pos)++;
@@ -461,7 +468,7 @@ object* read_atom(char* input, uint* pos){
 
 	if (input[*pos] == '\''){
 
-		if (input[*pos] == ' '){ 
+		if (input[*pos + 1 ] == ' '){ 
 			return NULL; 
 			printf("argument invalide pour ' (quote) en position %d\n", *pos);
 		}

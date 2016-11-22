@@ -50,6 +50,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../object.h" />
+		<Unit filename="../primitive.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../primitive.h" />
 		<Unit filename="../print.c">
 			<Option compilerVar="CC" />
 		</Unit>
