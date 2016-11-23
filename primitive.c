@@ -11,6 +11,36 @@
 
 void init_tab_prim(char tab_form[NB_PRIM][STRLEN]){
 	strcpy(tab_form[0],"-");
+	strcpy(tab_form[1],"+");
+	strcpy(tab_form[2],"*");
+	strcpy(tab_form[3],"/");
+	strcpy(tab_form[4],"remainder");
+	strcpy(tab_form[5],"=");
+	strcpy(tab_form[6],"<");
+	strcpy(tab_form[7],">");
+	strcpy(tab_form[8],"abs");
+	strcpy(tab_form[9],"null?");
+	strcpy(tab_form[10],"boolean?");
+	strcpy(tab_form[11],"symbol?");
+	strcpy(tab_form[12],"integer?");
+	strcpy(tab_form[13],"char?");
+	strcpy(tab_form[14],"string?");
+	strcpy(tab_form[15],"pair?");
+	strcpy(tab_form[16],"cons");
+	strcpy(tab_form[17],"car");
+	strcpy(tab_form[18],"cdr");
+	strcpy(tab_form[19],"set-car!");
+	strcpy(tab_form[20],"set-cdr!");
+	strcpy(tab_form[21],"list");
+	strcpy(tab_form[22],"eq?");
+	strcpy(tab_form[23],"char->integer");
+	strcpy(tab_form[24],"integer->char");
+	strcpy(tab_form[25],"number->string");
+	strcpy(tab_form[26],"string->number");
+	strcpy(tab_form[27],"symbol->string");
+	strcpy(tab_form[28],"string->symbol");
+
+
 }
 
 /**
@@ -25,6 +55,63 @@ void init_tab_prim(char tab_form[NB_PRIM][STRLEN]){
 void init_add_tab_prim(adress tab_add_form[NB_PRIM]){
 	tab_add_form[0].addtype = ADD_PRIMITIVE;
 	tab_add_form[0].this.forme = *moins;
+	tab_add_form[1].addtype = ADD_PRIMITIVE;
+	tab_add_form[1].this.forme = *plus;
+	tab_add_form[2].addtype = ADD_PRIMITIVE;
+	tab_add_form[2].this.forme = *produit;
+	tab_add_form[3].addtype = ADD_PRIMITIVE;
+	tab_add_form[3].this.forme = *quotient;
+	tab_add_form[4].addtype = ADD_PRIMITIVE;
+	tab_add_form[4].this.forme = *remainder;
+	tab_add_form[5].addtype = ADD_PRIMITIVE;
+	tab_add_form[5].this.forme = *egal;
+	tab_add_form[6].addtype = ADD_PRIMITIVE;
+	tab_add_form[6].this.forme = *inferio;
+	tab_add_form[7].addtype = ADD_PRIMITIVE;
+	tab_add_form[7].this.forme = *superio;
+	tab_add_form[8].addtype = ADD_PRIMITIVE;
+	tab_add_form[8].this.forme = *fabs;
+	tab_add_form[9].addtype = ADD_PRIMITIVE;
+	tab_add_form[9].this.forme = *isnull;
+	tab_add_form[10].addtype = ADD_PRIMITIVE;
+	tab_add_form[10].this.forme = *isboolean;
+	tab_add_form[11].addtype = ADD_PRIMITIVE;
+	tab_add_form[11].this.forme = *issymbol;
+	tab_add_form[12].addtype = ADD_PRIMITIVE;
+	tab_add_form[12].this.forme = *isinteger;
+	tab_add_form[13].addtype = ADD_PRIMITIVE;
+	tab_add_form[13].this.forme = *ischar;
+	tab_add_form[14].addtype = ADD_PRIMITIVE;
+	tab_add_form[14].this.forme = *isstring;
+	tab_add_form[15].addtype = ADD_PRIMITIVE;
+	tab_add_form[15].this.forme = *ispair;
+	tab_add_form[16].addtype = ADD_PRIMITIVE;
+	tab_add_form[16].this.forme = *cons;
+	tab_add_form[17].addtype = ADD_PRIMITIVE;
+	tab_add_form[17].this.forme = *fcar;
+	tab_add_form[18].addtype = ADD_PRIMITIVE;
+	tab_add_form[18].this.forme = *fcdr;
+	tab_add_form[19].addtype = ADD_PRIMITIVE;
+	tab_add_form[19].this.forme = *setcar;
+	tab_add_form[20].addtype = ADD_PRIMITIVE;
+	tab_add_form[20].this.forme = *setcdr;
+	tab_add_form[21].addtype = ADD_PRIMITIVE;
+	tab_add_form[21].this.forme = *islist;
+	tab_add_form[22].addtype = ADD_PRIMITIVE;
+	tab_add_form[22].this.forme = *iseq;
+	tab_add_form[23].addtype = ADD_PRIMITIVE;
+	tab_add_form[23].this.forme = *char2integer;
+	tab_add_form[24].addtype = ADD_PRIMITIVE;
+	tab_add_form[24].this.forme = *integer2char;
+	tab_add_form[25].addtype = ADD_PRIMITIVE;
+	tab_add_form[25].this.forme = *number2string;
+	tab_add_form[26].addtype = ADD_PRIMITIVE;
+	tab_add_form[26].this.forme = *string2number;
+	tab_add_form[27].addtype = ADD_PRIMITIVE;
+	tab_add_form[27].this.forme = *symbol2string;
+	tab_add_form[28].addtype = ADD_PRIMITIVE;
+	tab_add_form[28].this.forme = *string2number;
+
 }
 
 
@@ -36,8 +123,6 @@ void init_add_tab_prim(adress tab_add_form[NB_PRIM]){
 /****        Arithmétique entière
 /****
 /****
-
-
 /**
 *@fn object* moins (object* o)
 *
@@ -72,9 +157,10 @@ object* moins (object* o){
 			{
 				WARNING_MSG("Overflow"); // message mais l'opération continue
 			}
-		obj_sous->this.num = obj_sous->this.num.this.integer - car(o)->this.number.this.integer; //(- a b) = a-b
+		obj_sous->this.number.this.integer = obj_sous->this.number.this.integer - car(o)->this.number.this.integer; //(- a b) = a-b
 		o = cdr(o);
 		}
+	}
 	//verif que la soustraction est un integer-----------------------A VERIFIER
 	return obj_sous;
 }
@@ -105,13 +191,13 @@ object* plus (object* o){
 	do
 	{
 		//verif qu'on atteint pas la limite  -----------------------A VERIFIER
-		if (INT_MIN-o.this.number.this.integer > obj_somme)
+		if (INT_MIN - o->this.number.this.integer > obj_somme)
 		{
 			WARNING_MSG("Overflow"); // message mais l'opération continue
 		}
 		obj_somme->this.number.this.integer = car(o)->this.number.this.integer+ obj_somme->this.number.this.integer;
 		o = cdr(o);
-	}while (o != obj_empty_list)
+	}while (o != obj_empty_list);
 	//verif que l'addition est un integer-----------------------A VERIFIER
 	return obj_somme;
 }
@@ -141,17 +227,17 @@ object* produit (object* o){
 	}
 	object* obj_produit = make_object();
 	obj_produit->type = SFS_NUMBER;
-	obj_produit->->this.number.this.integer = 1;
+	obj_produit->this.number.this.integer = 1;
 	do
 	{
 		//verif qu'on atteint pas la limite -----------------------A VERIFIER
-		if (INT_MIN/o.this.number.this.integer > obj_produit)
+		if (INT_MIN/o->this.number.this.integer > obj_produit)
 		{
 			WARNING_MSG("Overflow"); // message mais l'opération continue
 		}
 		obj_produit->this.number.this.integer = car(o)->this.number.this.integer* obj_produit->this.number.this.integer;
 		o = cdr(o);
-	}while (o != obj_empty_list)
+	}while (o != obj_empty_list);
 	//verif que la multiplication est un integer-----------------------A VERIFIER
 	return obj_produit;
 }
@@ -266,6 +352,7 @@ object* egal (object* o){
 		WARNING_MSG("Pas assez d'arguments - min 2");
 		return NULL;
 	}
+	object* obj_res = make_object();
 	do
 	{
 		if (car(o)->this.number.this.integer == car(cdr(o))->this.number.this.integer)
@@ -276,7 +363,7 @@ object* egal (object* o){
 		else
 		{
 			obj_res=obj_false;
-			return obj_res
+			return obj_res;
 		}
 	}while (cdr(cdr(o)) != obj_empty_list);
 	//verif que le résultat est un bouleen-----------------------A VERIFIER
@@ -320,7 +407,7 @@ object* inferio (object* o){
 		else if (car(o)->this.number.this.integer > car(cdr(o))->this.number.this.integer)
 		{
 			obj_res=obj_false;
-			return obj_res
+			return obj_res;
 		}
 		else
 		{
@@ -367,7 +454,7 @@ object* superio (object* o){
 		else if (car(o)->this.number.this.integer < car(cdr(o))->this.number.this.integer)
 		{
 			obj_res=obj_false;
-			return obj_res
+			return obj_res;
 		}
 		else
 		{
@@ -424,10 +511,6 @@ object* fabs (object* o){
 /****        Predicats
 /****
 /****
-
-
-
-
 /**
 *@fn object* isnull (object* o)
 *
@@ -470,9 +553,11 @@ object* isboolean (object* o){
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
 	}
+
+	object* obj_res = make_object();
 	do
 	{ // ------------------------ A VERIFIER
-		if ((car(o)->this.number.this.integer == obj_true) || ((car(o)->this.number.this.integer == obj_false)  )
+		if ((car(o)->this.number.this.integer == obj_true) || (car(o)->this.number.this.integer == obj_false)  )
 		{
 			obj_res=obj_true;
 			o = cdr(o);
@@ -480,7 +565,7 @@ object* isboolean (object* o){
 		else
 		{
 			obj_res=obj_false;
-			return obj_res
+			return obj_res;
 		}
 	}while (cdr(cdr(o)) != obj_empty_list);
 	return obj_res;
@@ -500,11 +585,12 @@ object* isboolean (object* o){
 
 
 object* issymbol (object* o){
-	if (o == obj_empty_list)
+/*	if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
 	}
+	object* obj_res = make_object();
 	do
 	{ // ------------------------ A VERIFIER
 		if (car(o)->this.type == SFS_SYMBOL)
@@ -515,10 +601,10 @@ object* issymbol (object* o){
 		else
 		{
 			obj_res=obj_false;
-			return obj_res
+			return obj_res;
 		}
 	}while (cdr(cdr(o)) != obj_empty_list);
-	return obj_res;
+	return obj_res;*/
 }
 
 
@@ -535,11 +621,12 @@ object* issymbol (object* o){
 
 
 object* isinteger (object* o){
-	if (o == obj_empty_list)
+	/*if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
 	}
+	object* obj_res = make_object();
 	do
 	{ // ------------------------ A VERIFIER
 		if (car(o)->this.type == SFS_NUMBER)
@@ -550,10 +637,10 @@ object* isinteger (object* o){
 		else
 		{
 			obj_res=obj_false;
-			return obj_res
+			return obj_res;
 		}
 	}while (cdr(cdr(o)) != obj_empty_list);
-	return obj_res;
+	return obj_res;*/
 }
 
 
@@ -571,11 +658,12 @@ object* isinteger (object* o){
 
 
 object* ischar (object* o){
-	if (o == obj_empty_list)
+	/*if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
 	}
+	object* obj_res = make_object();
 	do
 	{ // ------------------------ A VERIFIER
 		if (car(o)->this.type == SFS_CHARACTER)
@@ -586,10 +674,10 @@ object* ischar (object* o){
 		else
 		{
 			obj_res=obj_false;
-			return obj_res
+			return obj_res;
 		}
 	}while (cdr(cdr(o)) != obj_empty_list);
-	return obj_res;
+	return obj_res;*/
 }
 
 
@@ -607,11 +695,12 @@ object* ischar (object* o){
 
 
 object* isstring (object* o){
-	if (o == obj_empty_list)
+/*	if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
 	}
+	object* obj_res = make_object();
 	do
 	{ // ------------------------ A VERIFIER
 		if (car(o)->this.type == SFS_STRING)
@@ -622,10 +711,10 @@ object* isstring (object* o){
 		else
 		{
 			obj_res=obj_false;
-			return obj_res
+			return obj_res;
 		}
 	}while (cdr(cdr(o)) != obj_empty_list);
-	return obj_res;
+	return obj_res;*/
 }
 
 
@@ -643,11 +732,12 @@ object* isstring (object* o){
 
 
 object* ispair (object* o){
-	if (o == obj_empty_list)
+/*	if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
 	}
+	object* obj_res = make_object();
 	do
 	{ // ------------------------ A VERIFIER
 		if (car(o)->this.type == SFS_PAIR)
@@ -658,10 +748,10 @@ object* ispair (object* o){
 		else
 		{
 			obj_res=obj_false;
-			return obj_res
+			return obj_res;
 		}
 	}while (cdr(cdr(o)) != obj_empty_list);
-	return obj_res;
+	return obj_res;*/
 }
 
 
@@ -671,8 +761,6 @@ object* ispair (object* o){
 /****        Manipulation de listes
 /****
 /****
-
-
 /**
 *@fn object* cons (object* o)
 *
@@ -718,7 +806,7 @@ object* cons (object* o)
 */
 
 
-object* car (object* o)	// ---------------- a tester si o est une liste
+object* fcar (object* o)	// ---------------- a tester si o est une liste
 {
 	if (o == obj_empty_list)
 	{
@@ -740,7 +828,7 @@ object* car (object* o)	// ---------------- a tester si o est une liste
 */
 
 
-object* cdr (object* o)	// ---------------- a tester si o est une liste
+object* fcdr (object* o)	// ---------------- a tester si o est une liste
 {
 	if (o == obj_empty_list)
 	{
@@ -751,7 +839,7 @@ object* cdr (object* o)	// ---------------- a tester si o est une liste
 }
 
 /**
-*@fn object* set-car! (object* o)
+*@fn object* setcar (object* o)
 *
 *@brief
 *
@@ -763,7 +851,7 @@ object* cdr (object* o)	// ---------------- a tester si o est une liste
 
 object* setcar (object* o)
 {
-	if ((o == obj_empty_list) || (cdr(o) == obj_empty_list))
+	/*if ((o == obj_empty_list) || (cdr(o) == obj_empty_list))
 	{
 		WARNING_MSG("Pas assez d'arguments - min 2");
 		return NULL;
@@ -778,12 +866,12 @@ object* setcar (object* o)
 	// ------------------- VERIFIER QUE LES ELEMENTS SONT BIEN DES NOMBRES?
 	obj_setcar->this.pair.car= cdr(o)->this.number.this.integer;
 	obj_setcar->this.pair.cdr= cdr(car(o))->this.number.this.integer;
-	return obj_setcar;
+	return obj_setcar;*/
 }
 
 
 /**
-*@fn object* set-cdr! (object* o)
+*@fn object* setcdr! (object* o)
 *
 *@brief
 *
@@ -795,7 +883,7 @@ object* setcar (object* o)
 
 object* setcdr (object* o)
 {
-	if ((o == obj_empty_list) || (cdr(o) == obj_empty_list))
+	/*if ((o == obj_empty_list) || (cdr(o) == obj_empty_list))
 	{
 		WARNING_MSG("Pas assez d'arguments - min 2");
 		return NULL;
@@ -810,7 +898,7 @@ object* setcdr (object* o)
 	// ------------------- VERIFIER QUE LES ELEMENTS SONT BIEN DES NOMBRES?
 	obj_setcdr->this.pair.car= car(car(o))->this.number.this.integer;
 	obj_setcdr->this.pair.cdr= cdr(o)->this.number.this.integer;
-	return obj_setcar;
+	return obj_setcdr;*/
 }
 
 
@@ -849,7 +937,29 @@ object* islist (object* o)
 
 object* iseq (object* o)
 {
-	//------------------------A FAIRE
+/*	if (o == obj_empty_list)
+	{
+		WARNING_MSG("Pas assez d'arguments - min 1");
+		return NULL;
+	}
+	if ((cdr(o))!= obj_empty_list)
+	{
+		WARNING_MSG("Trop d'arguments - max=2");
+		return NULL;
+	}
+	object* obj_eq = make_object();
+	if(car(o)->type == car(cdr(o))->type)
+	{
+		/*if (   )//valeur de car(o) == valeur de car(cdr(o))
+		{
+			obj_eq = obj_true;
+			return obj_eq;
+		}
+		else
+		{
+			obj_eq = obj_false;
+			return obj_eq;
+		}*/
 }
 
 
@@ -863,10 +973,6 @@ object* iseq (object* o)
 /****        Conversions de types
 /****
 /****
-
-
-
-
 /**
 *@fn object* char2integer (object* o)
 *
@@ -890,10 +996,23 @@ object* char2integer (object* o)
 		WARNING_MSG("Trop d'arguments - max=2");
 		return NULL;
 	}
-	object* obj_transf = make_object();
-	obj_transf->type = SFS_NUMBER;
-	obj_transf->this.number.this.integer= sscanf("%d", o->this
-
+	if (o->type != SFS_CHARACTER)
+	{
+		WARNING_MSG("Argument invalide");
+		return NULL;
+	}
+	object* obj_tranfs = make_object();
+	 obj_tranfs->type = SFS_NUMBER;
+	if (car(o) <126 || car(o) >0)
+	{
+		obj_tranfs->this.number.this.integer = sscanf("%d", o);
+		return obj_tranfs;
+	}
+	else
+	{
+		WARNING_MSG("Argument invalide");
+		return NULL;
+	}
 }
 
 
@@ -912,7 +1031,7 @@ object* char2integer (object* o)
 
 object* integer2char (object* o)
 {
-	if (o == obj_empty_list)
+ 	if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
@@ -922,9 +1041,23 @@ object* integer2char (object* o)
 		WARNING_MSG("Trop d'arguments - max=2");
 		return NULL;
 	}
-	object* obj_transf = make_object();
-	obj_transf->type = SFS_CHARACTER;
-
+	if (o->type != SFS_NUMBER)
+	{
+		WARNING_MSG("Argument invalide");
+		return NULL;
+	}
+	object* obj_tranfs = make_object();
+	obj_tranfs->type = SFS_CHARACTER;
+	if (car(o) <126 || car(o) >0)
+	{
+		obj_tranfs->this.character= sscanf("%d", o->this.number.this.integer);
+		return obj_tranfs;
+	}
+	else
+	{
+		WARNING_MSG("Argument invalide");
+		return NULL;
+	}
 }
 
 
@@ -943,7 +1076,7 @@ object* integer2char (object* o)
 
 object* number2string (object* o)
 {
-	if (o == obj_empty_list)
+ 	if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
@@ -953,9 +1086,15 @@ object* number2string (object* o)
 		WARNING_MSG("Trop d'arguments - max=2");
 		return NULL;
 	}
-	object* obj_transf = make_object();
-	obj_transf->type = SFS_STRING;
-
+	if (o->type != SFS_NUMBER)
+	{
+		WARNING_MSG("Argument invalide");
+		return NULL;
+	}
+	object* obj_tranfs = make_object();
+	obj_tranfs->type = SFS_STRING;
+	obj_tranfs = sscanf("%d", o->this.number.this.integer);
+	return obj_tranfs;
 }
 
 
@@ -974,7 +1113,7 @@ object* number2string (object* o)
 
 object* string2number (object* o)
 {
-	if (o == obj_empty_list)
+ 	if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
@@ -984,9 +1123,15 @@ object* string2number (object* o)
 		WARNING_MSG("Trop d'arguments - max=2");
 		return NULL;
 	}
-	object* obj_transf = make_object();
-	obj_transf->type = SFS_NUMBER;
-
+	if (o->type != SFS_STRING)
+	{
+		WARNING_MSG("Argument invalide");
+		return NULL;
+	}
+	object* obj_tranfs = make_object();
+	obj_tranfs->type = SFS_NUMBER;
+	obj_tranfs->this.number.this.integer = sscanf("%d", o);
+	return obj_tranfs;
 }
 
 
@@ -1005,7 +1150,8 @@ object* string2number (object* o)
 
 object* symbol2string (object* o)
 {
-	if (o == obj_empty_list)
+
+ 	if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
@@ -1015,9 +1161,15 @@ object* symbol2string (object* o)
 		WARNING_MSG("Trop d'arguments - max=2");
 		return NULL;
 	}
-	object* obj_transf = make_object();
-	obj_transf->type = SFS_STRING;
-
+	if (o->type != SFS_SYMBOL)
+	{
+		WARNING_MSG("Argument invalide");
+		return NULL;
+	}
+	object* obj_tranfs = make_object();
+	obj_tranfs->type = SFS_STRING;
+	obj_tranfs = sscanf("%s", o);
+	return obj_tranfs;
 }
 
 
@@ -1034,8 +1186,9 @@ object* symbol2string (object* o)
 
 
 object* string2symbol (object* o)
-{
- 	if (o == obj_empty_list)
+{return obj_false;}
+
+/* 	if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
@@ -1045,7 +1198,13 @@ object* string2symbol (object* o)
 		WARNING_MSG("Trop d'arguments - max=2");
 		return NULL;
 	}
-	object* obj_transf = make_object();
-	obj_transf->type = SFS_SYMBOL;
-
-}
+	if (o->type != SFS_STRING)
+	{
+		WARNING_MSG("Argument invalide");
+		return NULL;
+	}
+	object* obj_tranfs = make_object();
+	obj_tranfs->type = SFS_SYMBOL;
+	obj_tranfs->type = sscanf("%c", o);
+	return obj_tranfs;
+}*/

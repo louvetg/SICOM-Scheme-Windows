@@ -77,3 +77,82 @@
 1479416393 source:c:\users\la_louve\documents\git_rep\sicom-scheme-windows\primitive.c
 	"primitive.h"
 
+1479834430 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\eval.c
+	"eval.h"
+
+1479834430 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\eval.h
+	"object.h"
+
+1479834430 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\object.h
+	"number.h"
+
+1478252845 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\number.h
+	"basic.h"
+
+1478252844 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\basic.h
+	<string.h>
+	"notify.h"
+
+1479834430 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\notify.h
+	<stdlib.h>
+	<stdio.h>
+
+1479834430 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\forme.c
+	"forme.h"
+
+1479834430 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\forme.h
+	<stdlib.h>
+	"object.h"
+	"eval.h"
+
+1479834430 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\mem.c
+	"mem.h"
+
+1479834430 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\mem.h
+	<stdlib.h>
+	"object.h"
+	"forme.h"
+	"primitive.h"
+
+1479904095 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\primitive.h
+	<stdlib.h>
+	"object.h"
+	"eval.h"
+
+1478252845 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\object.c
+	"object.h"
+	"mem.h"
+
+1479904067 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\primitive.c
+	"primitive.h"
+	<limits.h>
+
+1478252845 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\print.c
+	"print.h"
+	<stdio.h>
+
+1478252845 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\print.h
+	"object.h"
+	<limits.h>
+
+1479834430 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\read.c
+	<stdio.h>
+	<ctype.h>
+	"read.h"
+
+1478252845 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\read.h
+	<stdio.h>
+	<errno.h>
+	"object.h"
+	<limits.h>
+
+1479834430 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\repl.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"object.h"
+	"read.h"
+	"eval.h"
+	"print.h"
+	"mem.h"
+
