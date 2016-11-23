@@ -12,12 +12,12 @@ extern "C" {
 #define NB_FORM 6
 
 void init_tab_form(char tab_form[NB_FORM][STRLEN]);
-void init_add_tab_form(adress tab_add_form[NB_FORM]);
+void init_add_tab_form(object* (*forme[NB_FORM])(object*));
 object* quote (object* o);
 object* and (object* o);
 object* or (object* o);
-object* define(object* o, object* obj_meta);
-object* set(object* o, object* obj_meta);
+object* define(object* o);
+object* set(object* o);
 object* si(object* o);
 
 #ifdef __cplusplus

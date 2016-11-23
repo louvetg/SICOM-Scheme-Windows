@@ -39,7 +39,7 @@ object* test_symb(object* o){
 	object* m;
 	object* s;
 
-	m = car(obj_meta);
+	m = car(obj_current);
 
 	do{
 		if (car(car(m))->type == SFS_SYMBOL){
@@ -76,16 +76,13 @@ object* test_symb(object* o){
 *@param object* obj_meta pointeur vers un objet dont le cdr.
 */
 
-object* all_symb(object* o, adress tst_form, object* obj_meta){
-	switch (tst_form.addtype){
-	case  ADD_FORME:
-		return (*tst_form.this.forme)(o);
+object* all_symb(object* o, object* tst_form){
+	switch (tst_form->type){
+	case SFS_ADRESS_FORME:
+		return (*(tst_form->this.fct))(o);
 		break;
-	case ADD_MEM_FORME:
-		return (*tst_form.this.mem_forme)(o, obj_meta);
-		break;
-	case ADD_PRIMITIVE:
-		return (*tst_form.this.prim)(eval_prim(cdr(o)));
+	case SFS_ADRESS_PRIM:
+		return (*tst_form->this.fct)(eval_prim(cdr(o)));
 	default:
 		printf("Forme inconnue erreur\n");
 		return NULL;
@@ -140,12 +137,12 @@ object* sfs_eval(object * input){
 		else{printf("Car de la liste n'est pas une fonction\n");}
 		return NULL;
 	}
-	if (cdr(tst_symb)->type == SFS_ADRESS){
+	if (cdr(tst_symb)->type == SFS_ADRESS_PRIM || cdr(tst_symb)->type == SFS_ADRESS_FORME){
 		if(atm){
 			printf("Expression invalide pour %s\n", obj->this.symbol);
 			return NULL;
 		}
-		return all_symb(input, cdr(tst_symb)->this.adress, obj_meta);			
+		return all_symb(input, cdr(tst_symb));			
 	}
 	else{ 
 		return obj_cpy(cdr(tst_symb));

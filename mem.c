@@ -23,7 +23,7 @@ void  sfs_free( void *ptr ) {
     free( ptr );
 }
 
-object * init_environnement(){
+object * init_meta_environnement(){
 	obj_meta = make_object();
 	obj_meta->type = SFS_PAIR;
 	obj_meta->this.pair.car = obj_empty_list;
@@ -31,14 +31,22 @@ object * init_environnement(){
 	return obj_meta;
 }
 
-object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress tab_add_form[NB_FORM], char tab_prim[NB_PRIM][STRLEN], adress tab_add_prim[NB_PRIM]){
+object * init_curr_environnement(){
+	obj_meta = make_object();
+	obj_meta->type = SFS_PAIR;
+	obj_meta->this.pair.car = obj_empty_list;
+	obj_meta->this.pair.cdr = obj_meta;
+	return obj_meta;
+}
+
+object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, object* (*forme[NB_FORM])(object*), char tab_prim[NB_PRIM][STRLEN], object* (*prim[NB_PRIM])(object*)){
 	uint k = NB_FORM;
 	uint j = NB_PRIM;
 	uint i;
 	object** list_pair_symb;
 	object** symb;
 	object** pair_symb;
-	object** num;
+	object** add;
 
 	symb = calloc(k+j, sizeof(object*));
 	for (i = 0; i < k+j; i++){ 
@@ -46,10 +54,9 @@ object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress 
 		symb[i]->type = SFS_SYMBOL; 
 	}
 
-	num = calloc(k+j, sizeof(object*));
+	add = calloc(k+j, sizeof(object*));
 	for (i = 0; i < k+j; i++){ 
-		num[i] = calloc(1, sizeof(object*));
-		num[i]->type = SFS_ADRESS;
+		add[i] = calloc(1, sizeof(object*));
 	}
 
 	list_pair_symb  = calloc(k+j, sizeof(object*));
@@ -60,19 +67,19 @@ object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress 
 
 	for (i = 0; i < k; i++){
 		
-		printf("%d_Contenu du tableau initial -- symb: %s, adresse: %d --\n",i,tab_form[i], tab_add_form[i]);
+
 		symb[i]->type = SFS_SYMBOL;
 		strcpy(symb[i]->this.symbol, tab_form[i]);
 
-		num[i]->type = SFS_ADRESS;
-		num[i]->this.adress = tab_add_form[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
-		printf("%d_Creation des objects -- symb: %s\n",i,symb[i]->this.symbol, num[i]->this.adress);
+		add[i]->type = SFS_ADRESS_FORME;
+		add[i]->this.fct = forme[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
+
 
 		pair_symb[i]->type = SFS_PAIR;
 		pair_symb[i]->this.pair.car = symb[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */	
-		pair_symb[i]->this.pair.cdr = num[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
+		pair_symb[i]->this.pair.cdr = add[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
 
-		printf("%d_Creation memoire de %s a l'adresse %d\n",i, pair_symb[i]->this.pair.car->this.symbol, pair_symb[i]->this.pair.cdr->this.adress);   
+		printf("%d_Creation memoire de %s ayant pour adresse %p\n", i, pair_symb[i]->this.pair.car->this.symbol, pair_symb[i]->this.pair.cdr);
 
 		list_pair_symb[i]->type = SFS_PAIR;
 		list_pair_symb[i]->this.pair.car = pair_symb[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
@@ -83,19 +90,19 @@ object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress 
 
 	for (i = k; i < k+j; i++){
 
-		printf("%d_Contenu du tableau initial -- symb: %s, adresse: %d --\n", i, tab_prim[i-k], tab_add_prim[i-k]);
+
 		symb[i]->type = SFS_SYMBOL;
 		strcpy(symb[i]->this.symbol, tab_prim[i-k]);
 
-		num[i]->type = SFS_ADRESS;
-		num[i]->this.adress = tab_add_prim[i-k]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
-		printf("%d_Creation des objects -- symb: %s\n", i, symb[i]->this.symbol, num[i]->this.adress);
+		add[i]->type = SFS_ADRESS_PRIM;
+		add[i]->this.fct = prim[i-k]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
+
 
 		pair_symb[i]->type = SFS_PAIR;
 		pair_symb[i]->this.pair.car = symb[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
-		pair_symb[i]->this.pair.cdr = num[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
+		pair_symb[i]->this.pair.cdr = add[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */
 
-		printf("%d_Creation memoire de %s a l'adresse %d\n", i, pair_symb[i]->this.pair.car->this.symbol, pair_symb[i]->this.pair.cdr->this.adress);
+		printf("%d_Creation memoire de %s ayant pour adresse %p\n", i, pair_symb[i]->this.pair.car->this.symbol, pair_symb[i]->this.pair.cdr);
 
 		list_pair_symb[i]->type = SFS_PAIR;
 		list_pair_symb[i]->this.pair.car = pair_symb[i]; /* soucis de mémoire - diagnostique valgrind - à essayer de traiter */

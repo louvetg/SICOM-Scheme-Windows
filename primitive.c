@@ -14,6 +14,9 @@ void init_tab_prim(char tab_form[NB_PRIM][STRLEN]){
 	strcpy(tab_form[1],"+");
 	strcpy(tab_form[2], "*");
 	strcpy(tab_form[3], "/");
+	strcpy(tab_form[4], "remainder");
+	strcpy(tab_form[5], "=");
+	strcpy(tab_form[6], "-");
 }
 
 /**
@@ -25,16 +28,13 @@ void init_tab_prim(char tab_form[NB_PRIM][STRLEN]){
 *@param uint num_tab_form[NB_FORM]) tableau allant contenir les "adresse" des formes.
 */
 
-void init_add_tab_prim(adress tab_add_form[NB_PRIM]){
-	tab_add_form[0].addtype = ADD_PRIMITIVE;
-	tab_add_form[0].this.forme = *moins;
-	tab_add_form[1].addtype = ADD_PRIMITIVE;
-	tab_add_form[1].this.forme = *plus;
-	tab_add_form[2].addtype = ADD_PRIMITIVE;
-	tab_add_form[2].this.forme = *produit;
-	tab_add_form[3].addtype = ADD_PRIMITIVE;
-	tab_add_form[3].this.forme = *quotient;
-
+void init_add_tab_prim(object* (*prim[NB_PRIM])(object*)){
+	prim[0] = *moins;
+	prim[1] = *plus;
+	prim[2] = *produit;
+	prim[3] = *quotient;
+	prim[4] = *remainder;
+	prim[5] = *egal;
 }
 
 
@@ -209,5 +209,85 @@ object* quotient(object* o){
 	//verif que la division est un integer-----------------------A VERIFIER
 	return obj_divis;
 }
+
+
+/**
+*@fn object* remainder (object* o)
+*
+*@brief Renvoi le reste d'une division
+*
+*@param object* o pointeur vers la structure étudiée
+*
+*@return object o* retourne l'expression passée dans la fonction
+*/
+
+
+object* remainder(object* o){
+	object* obj_reste = make_object();
+	obj_reste->type = SFS_NUMBER;
+	obj_reste->this.number.this.integer = 1;
+	if ((o == obj_empty_list) || (cdr(o) == obj_empty_list))
+	{
+		WARNING_MSG("Pas assez d'arguments - min 2");
+		return NULL;
+	}
+	if (cdr(cdr(o)) != obj_empty_list)
+	{
+		WARNING_MSG("Trop d'arguments - max=2");
+		return NULL;
+	}
+	obj_reste->this.number.this.integer = car(o)->this.number.this.integer % car(cdr(o))->this.number.this.integer;
+	//verif que le reste est un integer-----------------------A VERIFIER
+	return obj_reste;
+}
+
+
+
+
+
+
+
+/**
+*@fn object* egal (object* o)
+*
+*@brief Evalue l'égalité
+*
+*@param object* o pointeur vers la structure étudiée
+*
+*@return object o* retourne l'expression passée dans la fonction
+*/
+
+
+object* egal(object* o){
+	if ((o == obj_empty_list) || (cdr(o) == obj_empty_list))
+	{
+		WARNING_MSG("Pas assez d'arguments - min 2");
+		return NULL;
+	}
+	object* obj_res = make_object();
+	do
+	{
+		if (car(o)->this.number.this.integer == car(cdr(o))->this.number.this.integer)
+		{
+			obj_res = obj_true;
+			o = cdr(o);
+		}
+		else
+		{
+			obj_res = obj_false;
+			return obj_res;
+		}
+	} while (cdr(cdr(o)) != obj_empty_list);
+	//verif que le résultat est un bouleen-----------------------A VERIFIER
+	return obj_res;
+}
+
+
+
+
+
+
+
+
 
 

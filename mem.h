@@ -25,8 +25,9 @@ extern "C" {
 void *sfs_malloc( size_t size );
 void  sfs_free( void *ptr );
 
-object * init_environnement();
-object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, adress tab_add_form[NB_FORM], char tab_prim[NB_PRIM][STRLEN], adress tab_add_prim[NB_PRIM]);
+object * init_meta_environnement();
+object * init_curr_environnement();
+object * init_meta_env(char tab_form[NB_FORM][STRLEN], object* obj_meta, object* (*forme[NB_FORM])(object*), char tab_prim[NB_PRIM][STRLEN], object* (*prim[NB_PRIM])(object*));
 
 #ifdef __cplusplus
 }

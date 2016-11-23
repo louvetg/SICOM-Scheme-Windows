@@ -16,6 +16,7 @@ void init_tab_form(char tab_form[NB_FORM][STRLEN]){
 	strcpy(tab_form[3],"and");
 	strcpy(tab_form[4],"or");
 	strcpy(tab_form[5],"if");
+	strcpy(tab_form[6], "if");
 }
 
 /**
@@ -27,19 +28,14 @@ void init_tab_form(char tab_form[NB_FORM][STRLEN]){
 *@param uint num_tab_form[NB_FORM]) tableau allant contenir les "adresse" des formes.
 */
 
-void init_add_tab_form(adress tab_add_form[NB_FORM]){
-	tab_add_form[0].addtype = ADD_FORME;
-	tab_add_form[0].this.forme = *quote;
-	tab_add_form[1].addtype = ADD_MEM_FORME;
-	tab_add_form[1].this.forme = *set;
-	tab_add_form[2].addtype = ADD_MEM_FORME;
-	tab_add_form[2].this.forme = *define;
-	tab_add_form[3].addtype = ADD_FORME;
-	tab_add_form[3].this.forme = *and;
-	tab_add_form[4].addtype = ADD_FORME;
-	tab_add_form[4].this.forme = *or;
-	tab_add_form[5].addtype = ADD_FORME;
-	tab_add_form[5].this.forme = *si;
+void init_add_tab_form(object* (*forme[NB_FORM])(object*)){
+	forme[0] = *quote;
+	forme[1] = *set;
+	forme[2] = *define;
+	forme[3] = *and;
+	forme[4] = *or;
+	forme[5] = *si;
+	forme[6] = *si;
 }
 
 
@@ -53,7 +49,7 @@ void init_add_tab_form(adress tab_add_form[NB_FORM]){
 *@return object o* retourne l'expression passée dans quote
 */
 
-object* define(object* o, object* obj_meta){
+object* define(object* o){
 
 	object* obj_car = make_object();
 	obj_car->type = SFS_SYMBOL;
@@ -72,13 +68,13 @@ object* define(object* o, object* obj_meta){
 	obj_pair->type = SFS_PAIR;
 	obj_pair->this.pair.car = obj_car;
 	obj_pair->this.pair.cdr = obj_cdr;
-	ajout_tete_env(obj_pair, obj_meta);
+	ajout_tete_env(obj_pair, obj_current);
 
 return obj_undef;
 }
 
 
-object* set(object* o, object* obj_meta){
+object* set(object* o){
 	object* obj = test_symb(car(cdr(o)));
 
 	if (obj == NULL){
@@ -94,7 +90,7 @@ object* set(object* o, object* obj_meta){
 		printf("Expression invalide dans le set\n");
 		return NULL;	
 	}
-	if (cdr(obj)->type == SFS_ADRESS){
+	if (cdr(obj)->type == SFS_ADRESS_PRIM || cdr(obj)->type == SFS_ADRESS_PRIM){
 		printf("Ecriture impossible, %s de l'environnement meta est protégé\n",car(obj)->this.symbol);
 		return NULL;
 	}

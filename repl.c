@@ -37,21 +37,23 @@ object* obj_false;
 object* obj_empty_list;
 object* obj_meta;
 object* obj_undef;
+object* obj_current;
 
 
 
-void init_interpreter(char tab_form[NB_FORM][STRLEN], adress tab_add_form[NB_FORM], char tab_prim[NB_PRIM][STRLEN], adress tab_add_prim[NB_PRIM]) {
+void init_interpreter(char tab_form[NB_FORM][STRLEN], object* (*forme[NB_FORM])(object*), char tab_prim[NB_PRIM][STRLEN], object* (*prim[NB_PRIM])(object*)) {
     init_tab_form(tab_form);
-    init_add_tab_form(tab_add_form);
+    init_add_tab_form(forme);
 	init_tab_prim(tab_prim);
-	init_add_tab_prim(tab_add_prim);
+	init_add_tab_prim(prim);
 
     obj_empty_list      = init_empty_list();
     obj_true			= init_true();
     obj_false			= init_false();
     obj_undef			= init_undef();
-    obj_meta            = init_environnement();
-	obj_meta			= init_meta_env(tab_form, obj_meta, tab_add_form, tab_prim, tab_add_prim);
+    obj_meta            = init_meta_environnement();
+	obj_current			= init_curr_environnement();
+	obj_meta			= init_meta_env(tab_form, obj_meta, forme, tab_prim, prim);
 }
 
 int main ( int argc, char *argv[] ) {
@@ -66,12 +68,12 @@ int main ( int argc, char *argv[] ) {
     FILE *   fp = NULL; /* le flux dans lequel les commande seront lues : stdin (mode shell) ou un fichier */
     
     char tab_form[NB_FORM][STRLEN];
-    adress tab_add_form[NB_FORM];
+	object* (*forme[NB_FORM])(object*);
 
 	char tab_prim[NB_PRIM][STRLEN];
-	adress tab_add_prim[NB_PRIM];
+	object* (*prim[NB_PRIM])(object*);
 
-	init_interpreter(tab_form, tab_add_form, tab_prim, tab_add_prim );
+	init_interpreter(tab_form, forme, tab_prim, prim);
 	
     /*par defaut : mode shell interactif */
     fp = stdin;

@@ -9,14 +9,16 @@ extern "C" {
 #include "object.h"
 #include "eval.h"
 
-#define NB_PRIM 4
+#define NB_PRIM 6
 
 void init_tab_prim(char tab_form[NB_PRIM][STRLEN]);
-void init_add_tab_prim(adress tab_add_form[NB_PRIM]);
+void init_add_tab_prim(object* (*prim[NB_PRIM])(object*));
 object* moins (object* o);
 object* plus (object* o);
 object* produit(object* o);
 object* quotient(object* o);
+object* remainder(object* o);
+object* egal(object* o);
 
 
 
