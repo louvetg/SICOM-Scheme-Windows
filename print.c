@@ -1,7 +1,7 @@
 
 /**
  * @file print.c
- * @author Gaspard LOUVET 
+ * @author Gaspard LOUVET
  * @date Tues sept 27 23:55 2016
  * @brief Printing stuff for SFS.
  *
@@ -20,7 +20,7 @@
  *@param object* Objet contenant l'atome à afficher
  *
  * */
- 
+
 void sfs_print_atom(object* o) {
 	if (o->type == SFS_BOOLEAN){
 		if (o->this.number.this.integer == 1){ printf("#t"); }
@@ -28,11 +28,11 @@ void sfs_print_atom(object* o) {
 	}
 	if (o->type == SFS_CHARACTER){
 		if(o->this.character == ' '){printf("#\\space");return;}
-		if(o->this.character == '\n'){printf("#\\newline");return;} 
+		if(o->this.character == '\n'){printf("#\\newline");return;}
 		else {printf("#\\%c",o->this.character); }
 	}
 	if (o->type == SFS_NIL){ printf(")"); }
-	if (o->type == SFS_NUMBER){ 
+	if (o->type == SFS_NUMBER){
 		switch (o->this.number.this.integer){
 		case INT_MAX:
 			printf("+inf");
@@ -58,9 +58,9 @@ void sfs_print_atom(object* o) {
  *
  *@brief Si l'object est une paire, alors on ouvre une parenthèse. Dans tous les cas,
  *  On affiche le car de l'expression considéré. Si l'expression est NIL, alors on met un " "
- * 	puis on affiche le cdr de l'expression. 
+ * 	puis on affiche le cdr de l'expression.
  *
- *@param object* Objet contenant la paire à afficher 
+ *@param object* Objet contenant la paire à afficher
  *
  * */
 
@@ -81,9 +81,9 @@ void sfs_print_pair(object* o) {
  *@param object* Objet contenant l'expression à afficher
  *
  * */
- 
+
 void sfs_print_b(object* o) {
-	
+
 	if (SFS_PAIR == o->type) {
 		sfs_print_pair(o);
 	}
@@ -102,9 +102,10 @@ void sfs_print_b(object* o) {
  *@param object* Objet contenant la s-expression à afficher
  *
  * */
- 
+
 void sfs_print(object* o){
 	if(o->type == SFS_PAIR || o->type == SFS_NIL ){printf("(");}
 	sfs_print_b(o);
+
 }
 

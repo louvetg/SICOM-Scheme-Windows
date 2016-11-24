@@ -114,7 +114,7 @@
 	"forme.h"
 	"primitive.h"
 
-1479945689 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\primitive.h
+1480007429 c:\users\megan\onedrive\documents\github\sicom-scheme-windows\primitive.h
 	<stdlib.h>
 	"object.h"
 	"eval.h"
@@ -123,11 +123,11 @@
 	"object.h"
 	"mem.h"
 
-1479947907 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\primitive.c
+1480008740 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\primitive.c
 	"primitive.h"
 	<limits.h>
 
-1478252845 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\print.c
+1480004178 source:c:\users\megan\onedrive\documents\github\sicom-scheme-windows\print.c
 	"print.h"
 	<stdio.h>
 
