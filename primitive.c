@@ -10,24 +10,24 @@
 */
 
 void init_tab_prim(char tab_form[NB_PRIM][STRLEN]){
-	strcpy(tab_form[0],"-");
+	/*strcpy(tab_form[0],"-");
 	strcpy(tab_form[1],"+");
 	strcpy(tab_form[2],"*");
 	strcpy(tab_form[3],"/");
 	strcpy(tab_form[4],"remainder");
 	strcpy(tab_form[5],"=");
-	strcpy(tab_form[6],"<");
-	strcpy(tab_form[7],">");
-	strcpy(tab_form[8],"abs");
-	strcpy(tab_form[9],"null?");
-	strcpy(tab_form[10],"boolean?");
-	strcpy(tab_form[11],"symbol?");
-	strcpy(tab_form[12],"integer?");
-	strcpy(tab_form[13],"char?");
-	strcpy(tab_form[14],"string?");
-	strcpy(tab_form[15],"pair?");
-	strcpy(tab_form[16],"cons");
-	strcpy(tab_form[17],"car");
+	strcpy(tab_form[0],"<");
+	strcpy(tab_form[1],">");
+	strcpy(tab_form[2],"abs");
+	strcpy(tab_form[3],"null?");
+	strcpy(tab_form[4],"boolean?");
+	*/strcpy(tab_form[0],"symbol?");
+	strcpy(tab_form[1],"integer?");
+	strcpy(tab_form[2],"char?");
+	strcpy(tab_form[3],"string?");
+	strcpy(tab_form[4],"pair?");
+	strcpy(tab_form[5],"cons");
+	/*strcpy(tab_form[17],"car");
 	strcpy(tab_form[18],"cdr");
 	strcpy(tab_form[19],"set-car!");
 	strcpy(tab_form[20],"set-cdr!");
@@ -38,7 +38,7 @@ void init_tab_prim(char tab_form[NB_PRIM][STRLEN]){
 	strcpy(tab_form[25],"number->string");
 	strcpy(tab_form[26],"string->number");
 	strcpy(tab_form[27],"symbol->string");
-	strcpy(tab_form[28],"string->symbol");
+	strcpy(tab_form[28],"string->symbol");*/
 
 
 }
@@ -53,8 +53,8 @@ void init_tab_prim(char tab_form[NB_PRIM][STRLEN]){
 */
 
 void init_add_tab_prim(adress tab_add_form[NB_PRIM]){
-	tab_add_form[0].addtype = ADD_PRIMITIVE;
-	tab_add_form[0].this.forme = *moins;
+	/*tab_add_form[0].addtype = ADD_PRIMITIVE;
+    tab_add_form[0].this.forme = *moins;
 	tab_add_form[1].addtype = ADD_PRIMITIVE;
 	tab_add_form[1].this.forme = *plus;
 	tab_add_form[2].addtype = ADD_PRIMITIVE;
@@ -65,29 +65,29 @@ void init_add_tab_prim(adress tab_add_form[NB_PRIM]){
 	tab_add_form[4].this.forme = *remainder;
 	tab_add_form[5].addtype = ADD_PRIMITIVE;
 	tab_add_form[5].this.forme = *egal;
-	tab_add_form[6].addtype = ADD_PRIMITIVE;
-	tab_add_form[6].this.forme = *inferio;
-	tab_add_form[7].addtype = ADD_PRIMITIVE;
-	tab_add_form[7].this.forme = *superio;
-	tab_add_form[8].addtype = ADD_PRIMITIVE;
-	tab_add_form[8].this.forme = *fabs;
-	tab_add_form[9].addtype = ADD_PRIMITIVE;
-	tab_add_form[9].this.forme = *isnull;
-	tab_add_form[10].addtype = ADD_PRIMITIVE;
-	tab_add_form[10].this.forme = *isboolean;
-	tab_add_form[11].addtype = ADD_PRIMITIVE;
-	tab_add_form[11].this.forme = *issymbol;
-	tab_add_form[12].addtype = ADD_PRIMITIVE;
-	tab_add_form[12].this.forme = *isinteger;
-	tab_add_form[13].addtype = ADD_PRIMITIVE;
-	tab_add_form[13].this.forme = *ischar;
-	tab_add_form[14].addtype = ADD_PRIMITIVE;
-	tab_add_form[14].this.forme = *isstring;
-	tab_add_form[15].addtype = ADD_PRIMITIVE;
-	tab_add_form[15].this.forme = *ispair;
-	tab_add_form[16].addtype = ADD_PRIMITIVE;
-	tab_add_form[16].this.forme = *cons;
-	tab_add_form[17].addtype = ADD_PRIMITIVE;
+	tab_add_form[0].addtype = ADD_PRIMITIVE;
+	tab_add_form[0].this.forme = *inferio;
+	tab_add_form[1].addtype = ADD_PRIMITIVE;
+	tab_add_form[1].this.forme = *superio;
+	tab_add_form[2].addtype = ADD_PRIMITIVE;
+	tab_add_form[2].this.forme = *fabs;
+	tab_add_form[3].addtype = ADD_PRIMITIVE;
+	tab_add_form[3].this.forme = *isnull;
+	tab_add_form[4].addtype = ADD_PRIMITIVE;
+	tab_add_form[4].this.forme = *isboolean;
+	*/tab_add_form[0].addtype = ADD_PRIMITIVE;
+	tab_add_form[0].this.forme = *issymbol;
+	tab_add_form[1].addtype = ADD_PRIMITIVE;
+	tab_add_form[1].this.forme = *isinteger;
+	tab_add_form[2].addtype = ADD_PRIMITIVE;
+	tab_add_form[2].this.forme = *ischar;
+	tab_add_form[3].addtype = ADD_PRIMITIVE;
+	tab_add_form[3].this.forme = *isstring;
+	tab_add_form[4].addtype = ADD_PRIMITIVE;
+	tab_add_form[4].this.forme = *ispair;
+	tab_add_form[5].addtype = ADD_PRIMITIVE;
+	tab_add_form[5].this.forme = *cons;
+	/*tab_add_form[17].addtype = ADD_PRIMITIVE;
 	tab_add_form[17].this.forme = *fcar;
 	tab_add_form[18].addtype = ADD_PRIMITIVE;
 	tab_add_form[18].this.forme = *fcdr;
@@ -110,13 +110,13 @@ void init_add_tab_prim(adress tab_add_form[NB_PRIM]){
 	tab_add_form[27].addtype = ADD_PRIMITIVE;
 	tab_add_form[27].this.forme = *symbol2string;
 	tab_add_form[28].addtype = ADD_PRIMITIVE;
-	tab_add_form[28].this.forme = *string2number;
+	tab_add_form[28].this.forme = *string2number;*/
 
 }
 
 
 
-
+/*
 /***********************************************************************************************************
 /***********************************************************************************************************
 /****
@@ -131,7 +131,7 @@ void init_add_tab_prim(adress tab_add_form[NB_PRIM]){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+
 
 object* moins (object* o){
 	if (o == obj_empty_list) // Cas liste vide
@@ -157,7 +157,7 @@ object* moins (object* o){
 			{
 				WARNING_MSG("Overflow"); // message mais l'opération continue
 			}
-		obj_sous->this.number.this.integer = obj_sous->this.number.this.integer - car(o)->this.number.this.integer; //(- a b) = a-b
+		obj_sous->this.number.this.integer = obj_sous->this.number.this.integer - car(cdr(o))->this.number.this.integer; //(- a b) = a-b
 		o = cdr(o);
 		}
 	}
@@ -176,7 +176,7 @@ object* moins (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+
 
 
 object* plus (object* o){
@@ -206,8 +206,6 @@ object* plus (object* o){
 
 
 
-
-
 /**
 *@fn object* produit (object* o)
 *
@@ -216,7 +214,6 @@ object* plus (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
 
 
 object* produit (object* o){
@@ -230,12 +227,15 @@ object* produit (object* o){
 	obj_produit->this.number.this.integer = 1;
 	do
 	{
-		//verif qu'on atteint pas la limite -----------------------A VERIFIER
-		if (INT_MIN/o->this.number.this.integer > obj_produit)
+	    //verif qu'on atteint pas la limite -----------------------A VERIFIER
+		WARNING_MSG("entree calcul produit");
+		if (INT_MIN/car(o)->this.number.this.integer > obj_produit)
 		{
 			WARNING_MSG("Overflow"); // message mais l'opération continue
 		}
+
 		obj_produit->this.number.this.integer = car(o)->this.number.this.integer* obj_produit->this.number.this.integer;
+		WARNING_MSG("sortie calcul produit");
 		o = cdr(o);
 	}while (o != obj_empty_list);
 	//verif que la multiplication est un integer-----------------------A VERIFIER
@@ -256,7 +256,6 @@ object* produit (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
 
 
 object* quotient (object* o){
@@ -307,7 +306,7 @@ object* quotient (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+
 
 
 object* remainder (object* o){
@@ -343,7 +342,7 @@ object* remainder (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+
 
 
 object* egal (object* o){
@@ -365,7 +364,7 @@ object* egal (object* o){
 			obj_res=obj_false;
 			return obj_res;
 		}
-	}while (cdr(cdr(o)) != obj_empty_list);
+	}while (cdr(o) != obj_empty_list);
 	//verif que le résultat est un bouleen-----------------------A VERIFIER
 	return obj_res;
 }
@@ -375,7 +374,7 @@ object* egal (object* o){
 
 
 
-
+*/
 /**
 *@fn object* inferio (object* o)
 *
@@ -384,8 +383,8 @@ object* egal (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
-
+**/
+/*
 
 object* inferio (object* o){
 	if ((o == obj_empty_list) || ( cdr(o) == obj_empty_list))
@@ -414,7 +413,7 @@ object* inferio (object* o){
 			WARNING_MSG("Il y a égalité");
 			return NULL;
 		}
-	}while (cdr(cdr(o)) != obj_empty_list);
+	}while (cdr(o) != obj_empty_list);
 	//verif que le résultat est un bouleen-----------------------A VERIFIER
 	return obj_res;
 }
@@ -433,7 +432,7 @@ object* inferio (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+*
 
 
 object* superio (object* o){
@@ -461,7 +460,7 @@ object* superio (object* o){
 			WARNING_MSG("Il y a égalité");
 			return NULL;
 		}
-	}while (cdr(cdr(o)) != obj_empty_list);
+	}while (cdr(o) != obj_empty_list);
 	//verif que le résultat est un bouleen-----------------------A VERIFIER
 	return obj_res;
 }
@@ -476,7 +475,7 @@ object* superio (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+**
 
 
 object* fabs (object* o){
@@ -519,7 +518,7 @@ object* fabs (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+**
 
 
 object* isnull (object* o){
@@ -544,8 +543,7 @@ object* isnull (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
-
+**
 
 object* isboolean (object* o){
 	if (o == obj_empty_list)
@@ -557,7 +555,7 @@ object* isboolean (object* o){
 	object* obj_res = make_object();
 	do
 	{ // ------------------------ A VERIFIER
-		if ((car(o)->this.number.this.integer == obj_true) || (car(o)->this.number.this.integer == obj_false)  )
+		if ((car(o) == obj_true) || (car(o) == obj_false)  )
 		{
 			obj_res=obj_true;
 			o = cdr(o);
@@ -567,7 +565,7 @@ object* isboolean (object* o){
 			obj_res=obj_false;
 			return obj_res;
 		}
-	}while (cdr(cdr(o)) != obj_empty_list);
+	}while (o != obj_empty_list);
 	return obj_res;
 }
 
@@ -581,11 +579,10 @@ object* isboolean (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
-
+**/
 
 object* issymbol (object* o){
-/*	if (o == obj_empty_list)
+	if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
@@ -593,7 +590,7 @@ object* issymbol (object* o){
 	object* obj_res = make_object();
 	do
 	{ // ------------------------ A VERIFIER
-		if (car(o)->this.type == SFS_SYMBOL)
+		if (car(o)->type == SFS_SYMBOL)
 		{
 			obj_res=obj_true;
 			o = cdr(o);
@@ -603,8 +600,8 @@ object* issymbol (object* o){
 			obj_res=obj_false;
 			return obj_res;
 		}
-	}while (cdr(cdr(o)) != obj_empty_list);
-	return obj_res;*/
+	}while (o != obj_empty_list);
+	return obj_res;
 }
 
 
@@ -621,15 +618,15 @@ object* issymbol (object* o){
 
 
 object* isinteger (object* o){
-	/*if (o == obj_empty_list)
+	if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
 	}
 	object* obj_res = make_object();
 	do
-	{ // ------------------------ A VERIFIER
-		if (car(o)->this.type == SFS_NUMBER)
+	{ // ------------------------ chamA VERIFIER
+		if (car(o)->type == SFS_NUMBER)
 		{
 			obj_res=obj_true;
 			o = cdr(o);
@@ -639,8 +636,8 @@ object* isinteger (object* o){
 			obj_res=obj_false;
 			return obj_res;
 		}
-	}while (cdr(cdr(o)) != obj_empty_list);
-	return obj_res;*/
+	}while (o != obj_empty_list);
+	return obj_res;
 }
 
 
@@ -654,11 +651,11 @@ object* isinteger (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+**/
 
 
 object* ischar (object* o){
-	/*if (o == obj_empty_list)
+	if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
@@ -666,7 +663,7 @@ object* ischar (object* o){
 	object* obj_res = make_object();
 	do
 	{ // ------------------------ A VERIFIER
-		if (car(o)->this.type == SFS_CHARACTER)
+		if (car(o)->type == SFS_CHARACTER)
 		{
 			obj_res=obj_true;
 			o = cdr(o);
@@ -676,8 +673,8 @@ object* ischar (object* o){
 			obj_res=obj_false;
 			return obj_res;
 		}
-	}while (cdr(cdr(o)) != obj_empty_list);
-	return obj_res;*/
+	}while (o != obj_empty_list);
+	return obj_res;
 }
 
 
@@ -691,11 +688,10 @@ object* ischar (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
-
+**/
 
 object* isstring (object* o){
-/*	if (o == obj_empty_list)
+    if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
@@ -703,7 +699,7 @@ object* isstring (object* o){
 	object* obj_res = make_object();
 	do
 	{ // ------------------------ A VERIFIER
-		if (car(o)->this.type == SFS_STRING)
+		if (car(o)->type == SFS_STRING)
 		{
 			obj_res=obj_true;
 			o = cdr(o);
@@ -713,8 +709,8 @@ object* isstring (object* o){
 			obj_res=obj_false;
 			return obj_res;
 		}
-	}while (cdr(cdr(o)) != obj_empty_list);
-	return obj_res;*/
+	}while (o != obj_empty_list);
+	return obj_res;
 }
 
 
@@ -728,11 +724,10 @@ object* isstring (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
-
+**/
 
 object* ispair (object* o){
-/*	if (o == obj_empty_list)
+    if (o == obj_empty_list)
 	{
 		WARNING_MSG("Pas assez d'arguments - min 1");
 		return NULL;
@@ -740,7 +735,7 @@ object* ispair (object* o){
 	object* obj_res = make_object();
 	do
 	{ // ------------------------ A VERIFIER
-		if (car(o)->this.type == SFS_PAIR)
+		if (car(o)->type == SFS_PAIR)
 		{
 			obj_res=obj_true;
 			o = cdr(o);
@@ -750,8 +745,8 @@ object* ispair (object* o){
 			obj_res=obj_false;
 			return obj_res;
 		}
-	}while (cdr(cdr(o)) != obj_empty_list);
-	return obj_res;*/
+	}while (o != obj_empty_list);
+	return obj_res;
 }
 
 
@@ -769,8 +764,7 @@ object* ispair (object* o){
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
-
+**/
 
 object* cons (object* o)
 {
@@ -794,7 +788,7 @@ object* cons (object* o)
 
 
 
-
+/*
 /**
 *@fn object* car (object* o)
 *
@@ -803,7 +797,7 @@ object* cons (object* o)
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+
 
 
 object* fcar (object* o)	// ---------------- a tester si o est une liste
@@ -825,7 +819,8 @@ object* fcar (object* o)	// ---------------- a tester si o est une liste
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+*
+
 
 
 object* fcdr (object* o)	// ---------------- a tester si o est une liste
@@ -846,7 +841,7 @@ object* fcdr (object* o)	// ---------------- a tester si o est une liste
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+
 
 
 object* setcar (object* o)
@@ -866,7 +861,7 @@ object* setcar (object* o)
 	// ------------------- VERIFIER QUE LES ELEMENTS SONT BIEN DES NOMBRES?
 	obj_setcar->this.pair.car= cdr(o)->this.number.this.integer;
 	obj_setcar->this.pair.cdr= cdr(car(o))->this.number.this.integer;
-	return obj_setcar;*/
+	return obj_setcar;
 }
 
 
@@ -878,7 +873,6 @@ object* setcar (object* o)
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
 
 
 object* setcdr (object* o)
@@ -898,7 +892,7 @@ object* setcdr (object* o)
 	// ------------------- VERIFIER QUE LES ELEMENTS SONT BIEN DES NOMBRES?
 	obj_setcdr->this.pair.car= car(car(o))->this.number.this.integer;
 	obj_setcdr->this.pair.cdr= cdr(o)->this.number.this.integer;
-	return obj_setcdr;*/
+	return obj_setcdr;
 }
 
 
@@ -912,7 +906,7 @@ object* setcdr (object* o)
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+
 
 
 object* islist (object* o)
@@ -932,7 +926,7 @@ object* islist (object* o)
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+
 
 
 object* iseq (object* o)
@@ -959,7 +953,7 @@ object* iseq (object* o)
 		{
 			obj_eq = obj_false;
 			return obj_eq;
-		}*/
+		}
 }
 
 
@@ -981,7 +975,7 @@ object* iseq (object* o)
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+*
 
 
 object* char2integer (object* o)
@@ -1026,7 +1020,7 @@ object* char2integer (object* o)
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+*
 
 
 object* integer2char (object* o)
@@ -1071,7 +1065,7 @@ object* integer2char (object* o)
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+*
 
 
 object* number2string (object* o)
@@ -1108,7 +1102,7 @@ object* number2string (object* o)
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+*
 
 
 object* string2number (object* o)
@@ -1145,7 +1139,7 @@ object* string2number (object* o)
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
+*
 
 
 object* symbol2string (object* o)
@@ -1182,7 +1176,6 @@ object* symbol2string (object* o)
 *@param object* o pointeur vers la structure étudiée
 *
 *@return object o* retourne l'expression passée dans la fonction
-*/
 
 
 object* string2symbol (object* o)
